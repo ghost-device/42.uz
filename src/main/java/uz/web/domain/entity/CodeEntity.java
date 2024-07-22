@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.web.domain.enumerators.CodeStatus;
 
 @Getter
 @Setter
@@ -15,11 +14,7 @@ import uz.web.domain.enumerators.CodeStatus;
 @Entity
 @Table(name = "codes")
 public class CodeEntity extends BaseEntity {
-    @JoinColumn
-    @OneToOne
-    private UserEntity user;
+    private String email;
 
     private String code;
-
-    private CodeStatus status;
 }
