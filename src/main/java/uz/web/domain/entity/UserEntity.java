@@ -16,9 +16,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
-    @Column(name = "chat_id")
-    private Long chatId;
-    private String phone;
+    private String email;
+    private String password;
     private Integer balance;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
