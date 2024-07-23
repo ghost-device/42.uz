@@ -1,9 +1,11 @@
 package uz.web.repo;
 
+import org.springframework.stereotype.Repository;
 import uz.web.domain.entity.UserEntity;
 
 import java.util.UUID;
 
+@Repository
 public class UserRepo extends BaseRepo<UserEntity> {
     public UserRepo() {
         super.aClass = UserEntity.class;
