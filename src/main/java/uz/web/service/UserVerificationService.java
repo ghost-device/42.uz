@@ -16,6 +16,8 @@ public class UserVerificationService {
 
     private CodeService codeService;
 
+    private UserService userService;
+
     public void checkCode(String email, String code){
         CodeEntity codeByEmail = codeService.getCodeByEmail(email);
 
@@ -38,8 +40,12 @@ public class UserVerificationService {
 
         try {
             javaMailSender.send(mailMessage);
-        } catch (MailException e){
-            throw new EmailNotFoundException();
+
+            userService.checkEmail(email);
+
+            codeService.save(new CodeEntity(email, code, LocalDateTime.now().plusMinutes(1)));
+        } catch (Exception e){
+            throw new EmailNotFoundException(e.getMessage());
         }
     }
 
