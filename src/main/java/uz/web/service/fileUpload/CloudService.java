@@ -35,10 +35,13 @@ public class CloudService {
 
       public String getFileUrl(String fileName){
           Bucket bucket = storage.get(bucketName);
+
           Blob blob = bucket.get(fileName);
+
           if(blob == null){
               throw new RuntimeException("");
           }
+
 
           return blob.signUrl(30, TimeUnit.MINUTES).toString();
       }
