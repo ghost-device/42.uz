@@ -43,4 +43,8 @@ public class UserService extends BaseService<UserEntity, UserRepo> {
     public void setUserBalanceById(UUID id, Integer amount){
         repo.setBalanceById(id, amount);
     }
+
+    public void checkEmail(String email){
+        repo.getUserByEmail(email);
+    }
 }
