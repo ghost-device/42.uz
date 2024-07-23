@@ -1,7 +1,11 @@
 package uz.web.repo;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.UserEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserRepo extends BaseRepo<UserEntity> {
@@ -9,17 +13,19 @@ public class UserRepo extends BaseRepo<UserEntity> {
         super.aClass = UserEntity.class;
     }
 
-    public UserEntity getUserByEmail(String email){
+    public UserEntity getUserByEmail(String email) {
         return entityManager.createQuery("from UserEntity u where u.email = :e", UserEntity.class)
                 .setParameter("e", email)
                 .getSingleResult();
     }
 
-    public void setBalanceById(UUID userId, Integer amount){
+    public void setBalanceById(UUID userId, Integer amount) {
         UserEntity user = entityManager.find(UserEntity.class, userId);
 
         user.setBalance(user.getBalance() + amount);
 
         entityManager.merge(user);
     }
+
+
 }
