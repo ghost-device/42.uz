@@ -26,7 +26,7 @@ public class UserVerificationService {
         }
     }
 
-    private String getUniqueCode() {
+    public static String getUniqueCode() {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < 3; i++) {
