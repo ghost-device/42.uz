@@ -20,5 +20,4 @@ public class PaymentService extends BaseService<PaymentEntity, PaymentRepo> {
                 .status(PaymentStatus.PENDING)
                 .build());
     }
-
 }

@@ -8,8 +8,6 @@ import java.io.IOException;
 
 @Service
 public class FileService {
-
-    @Autowired
     CloudService cloudService;
 
     public String uploadFile(MultipartFile file) throws IOException {
@@ -23,6 +21,4 @@ public class FileService {
     public String getFileUrl(String fileType, String fileName ) {
          return cloudService.getFileUrl(fileName);
     }
-
-
 }

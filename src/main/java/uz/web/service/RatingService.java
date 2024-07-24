@@ -18,8 +18,5 @@ public class RatingService extends BaseService<RatingEntity, RatingRepo> {
                 .rating(rating.getRating())
                 .course(courseService.findById(rating.getCourseId()))
                 .build());
-
-
     }
-
 }

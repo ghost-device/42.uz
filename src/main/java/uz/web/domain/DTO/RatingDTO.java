@@ -13,5 +13,4 @@ public class RatingDTO {
     private UUID userId;
     private UUID courseId;
     private int rating;
-
 }
