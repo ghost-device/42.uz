@@ -12,15 +12,15 @@ public abstract class BaseRepo<T extends BaseEntity> {
 
     protected Class<T> aClass;
 
-    public void save(T t){
+    public void save(T t) {
         entityManager.persist(t);
     }
 
-    public T findById(UUID id){
+    public T findById(UUID id) {
         return entityManager.find(aClass, id);
     }
 
-    public void delete(UUID id){
+    public void delete(UUID id) {
         T entity = findById(id);
 
         if (entity != null) {
@@ -30,7 +30,9 @@ public abstract class BaseRepo<T extends BaseEntity> {
         }
     }
 
-    public void update(T t){
+    public void update(T t) {
         entityManager.merge(t);
+
     }
+
 }
