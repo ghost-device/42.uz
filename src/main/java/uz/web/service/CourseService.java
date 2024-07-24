@@ -9,23 +9,29 @@ import java.util.List;
 import java.util.UUID;
 
 public class CourseService extends BaseService<CourseEntity, CourseRepo> {
+    private CloudService cloudService;
 
+    public List<CourseDAO> getAllCourse() {
+        return getCourseDAOS(repo.getAllCourse());
+    }
 
-//    public List<CourseDAO> getAllCourse() {
-//        List<CourseDAO> list = new ArrayList<>();
-//
-//        for (CourseEntity course : repo.getAllCourse()) {
-//            list.add(new CourseDAO(
-//                    course.getName(),
-//                    course.getDescription(),
-//                    course.getMentor().getName(),
-//                    course.getPrice(),
-//
-//            ));
-//        }
-//    }
+    public List<CourseDAO> getCoursesByUser(UUID id) {
+        return getCourseDAOS(repo.getCoursesByUser(id));
+    }
 
-    public List<CourseEntity> getCoursesByUser(UUID id) {
-        return repo.getCoursesByUser(id);
+    private List<CourseDAO> getCourseDAOS(List<CourseEntity> courseEntities) {
+        List<CourseDAO> list = new ArrayList<>();
+
+        for (CourseEntity course : courseEntities) {
+            list.add(new CourseDAO(
+                    course.getName(),
+                    course.getDescription(),
+                    course.getMentor().getName(),
+                    course.getPrice(),
+                    cloudService.getFileUrl(course.getImageId())
+            ));
+        }
+
+        return list;
     }
 }
