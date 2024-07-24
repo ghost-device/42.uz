@@ -6,7 +6,6 @@ import uz.web.domain.DAO.StatisticDAO;
 
 @Service
 public class StatisticService {
-
     CourseService courseService;
     MentorService mentorService;
     CourseOfUserService courseOfUserService;
