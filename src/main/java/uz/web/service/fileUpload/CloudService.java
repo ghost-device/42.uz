@@ -44,9 +44,3 @@ public class CloudService {
           return blob.signUrl(30, TimeUnit.MINUTES).toString();
       }
 }
-
-
-
-
-
-
