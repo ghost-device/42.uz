@@ -1,6 +1,5 @@
 package uz.web.repo;
 
-import jakarta.persistence.TypedQuery;
 import uz.web.domain.entity.CourseEntity;
 
 import java.util.List;
@@ -8,9 +7,7 @@ import java.util.UUID;
 
 public class CourseRepo extends BaseRepo<CourseEntity> {
     public List<CourseEntity> getAllCourse() {
-        String findAll = "from CourseEntity c";
-        TypedQuery<CourseEntity> query = entityManager.createQuery(findAll, CourseEntity.class);
-        return query.getResultList();
+        return entityManager.createQuery("from CourseEntity c", CourseEntity.class).getResultList();
     }
     
     public List<CourseEntity> getCoursesByUser(UUID id) {

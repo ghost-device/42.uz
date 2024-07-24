@@ -1,10 +1,9 @@
-package uz.web.service.fileUpload;
+package uz.web.service;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import uz.web.service.UserVerificationService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
