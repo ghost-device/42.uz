@@ -1,16 +1,14 @@
 package uz.web.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.web.domain.enumerators.PaymentStatus;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "payments")
@@ -20,6 +18,8 @@ public class PaymentEntity extends BaseEntity {
     private UserEntity user;
 
     private Integer amount;
+
+    private String recipeUrl;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
