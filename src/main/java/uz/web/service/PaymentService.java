@@ -27,7 +27,7 @@ public class PaymentService implements BaseService<PaymentEntity> {
         repo.save(PaymentEntity.builder()
                 .user(userService.findById(payment.getId()))
                 .amount(payment.getAmount())
-                .recipeUrl(payment.getRecipeUrl())
+                .paymentCheckId(payment.getRecipeUrl())
                 .status(PaymentStatus.PENDING)
                 .build());
     }

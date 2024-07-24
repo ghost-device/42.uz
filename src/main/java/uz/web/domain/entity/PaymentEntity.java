@@ -19,7 +19,7 @@ public class PaymentEntity extends BaseEntity {
 
     private Integer amount;
 
-    private String recipeUrl;
+    private String paymentCheckId;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
