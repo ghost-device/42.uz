@@ -1,0 +1,52 @@
+package uz.web.service.fileUpload;
+
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.storage.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import uz.web.service.UserVerificationService;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+@Service
+public class CloudService {
+      private final Storage storage;
+      private final String bucketName;
+
+      public CloudService() throws IOException {
+           this.storage = StorageOptions.newBuilder()
+                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/images-428112-d477a66b2fd3.json")))
+                   .build()
+                   .getService();
+           this.bucketName = "videos42";
+      }
+
+      public String uploadFile(MultipartFile file) throws IOException {
+          String fileName = UserVerificationService.getUniqueCode();
+
+          BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
+          storage.create(blobInfo, file.getBytes());
+
+          return fileName;
+      }
+
+      public String getFileUrl(String fileName){
+          Bucket bucket = storage.get(bucketName);
+
+          Blob blob = bucket.get(fileName);
+
+          if(blob == null){
+              throw new RuntimeException("");
+          }
+
+          return blob.signUrl(30, TimeUnit.MINUTES).toString();
+      }
+}
+
+
+
+
+
+
