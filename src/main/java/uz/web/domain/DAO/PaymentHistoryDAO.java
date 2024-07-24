@@ -6,7 +6,6 @@ import uz.web.domain.enumerators.PaymentStatus;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 @Builder
