@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "images-428112",
+  "private_key_id": "d477a66b2fd3392e6a236416ccac767a8874fcdb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCpXk92p75AXPm9\nhOtolV8WCbrwY6dh474z7GXAs6v4GRCBJGTir36C2gIcSM9vk2DUIiDhtqCR/vE7\nTU9S8CmuPjvYnki6mgFmjZUMuIPZhTOe2xmVC4qEoBYUUljDRe+sX5W8JrQatxf8\nvnYNhhXVV5tbpiMWYsbQRb3qVueEaBydehCZokCmxyEsX/yfQoiAlPXfBUt5Ko2k\naFugiW8YCOrYUfT+h8DVrDTBfqBrSRmnNpH6GtvtgSwaXIyeWdFth1/20zUd7xj9\nHTjUhhj+Ij+fTuyF84Mrl+roFMPqmX/oJCcfm9xSe7bbpFUS90G0Rt4MPBCZBEca\n5SgWm6fZAgMBAAECggEAFYu/CHq4FrWykEavsIsetg3V1LfwtrYYtRVJL9W2NlEb\nSuUnhQ5LRffYQI3jVFqHfQ+8ZsprVzdQq+PJXWUvquVq3+3plad62czVcxv+q0t+\nhiJxo4bSKni3u60VcqixH+4Rp9u1RMLEZULmKhFD3MiQ0HzBm5ru7NblHUHMoQjC\nLnvslm/cfYu0EQIpYG1y4G6PZ/9OTX2yzBwn9MbVqhpJMd1Vltcx8YV22gHg+sWG\nvYOityxAyH0dXXUofB76ZC6cdXHo8AwH9Vx8iuoGrqPbqqsk7o0EUHXfzUoMylRt\n3KAIZa/92SXU04BHsgfqPWNOdY4IEoqYPx8csfYH0wKBgQDsH/hHijGXEK+1fmL6\n2JFm2NBE3zF4owFHZlHRAbRbH9/p9pISejdfMkw1xcVeOvG/yjkDlTvODHDHwudU\nOetgEOmM/M/qk+cr+eeUTc0CmmXLukA/3+5oKTRtR5xAMnFuX5D6rGneIH9/0B7e\nNVdjN42Nj+v7BFyKxOfs1UcUjwKBgQC3n95kYUh14BYxrhLL2UjZn366WPXHui7a\nn9OHbImURUt7bKLuPGrtmrFzz04/vOw6ZMKihHK5qS62oEQTyZaDe8sKEPwhTCJN\nUIijdGEWKhhI2XOBGgICI2WTZwuKw9K4gqgyPIRDXG+JbxuDRYZQQN8g1ZcnfX4k\nDw7OVDfBFwKBgQDWD4GQsYqVbe4s9kAbMrxWZZYh6ck6mWPua6ceeJIdzj67Jupz\nz9Jk/f8y/HEaJQvGmDips9+8w3B22I3IwJ1OwOZKB2MiQSVgq7SysPl7M6e3Usku\nXv8N9NTvgOz5EgHdUsvnROjRE9sibvWc8vSfINy2ClSfguu2bh3nic5fpwKBgQCJ\n0S91X56m+f0uZFwvK3IGBDN1YXd25EJuTC7TIZ9Q7YFtrWfMLwSCOOye4yTzqbQT\nT7TVjVseBeDNqRPvVgnlvW/yqjTSOPY12Q/0vlBv9kArzSln6EFBoZeHPnvnNnpd\niZL7wXfzptj/6ahYqkHY0hel6Sl9ti6KmdKfAY6nGQKBgQC9TI+6b92dIPxPJG+B\nKz8K3IBRHWw298wG2WYH+1FKA087gY6VFxSO7a2AMpTlUPQQLdkD1f1kwil67FuI\n5s1EtrCil1MtoAcwIlhKs+GJgqBiQH03jb045TbOxTd3xhCZIct9zaGx5IfBbynJ\nwE6XYhSTXnWkXPRFz2wzD6CMOA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "jamshid-elmurodov@images-428112.iam.gserviceaccount.com",
+  "client_id": "102271778612673497403",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jamshid-elmurodov%40images-428112.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

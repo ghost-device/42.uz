@@ -12,13 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class CloudService {
-
       private final Storage storage;
       private final String bucketName;
 
       public CloudService() throws IOException {
            this.storage = StorageOptions.newBuilder()
-                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("PATH_TO_KEY_FILE")))
+                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/images-428112-d477a66b2fd3.json")))
                    .build()
                    .getService();
            this.bucketName = "videos42";
@@ -42,13 +41,8 @@ public class CloudService {
               throw new RuntimeException("");
           }
 
-
           return blob.signUrl(30, TimeUnit.MINUTES).toString();
       }
-
-
-
-
 }
 
 
