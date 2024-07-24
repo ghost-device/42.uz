@@ -47,6 +47,19 @@ public class CloudService {
       }
 
 
+    public String upload(MultipartFile file) throws IOException {
+        String contentType = file.getContentType();
+        if(contentType != null){
+            return uploadFile(file);
+        }
+        throw new IllegalArgumentException("Unsupported content type");
+    }
+
+    public String getUrl(String fileType, String fileName ) {
+        return getFileUrl(fileName);
+    }
+
+
 
 
 }
