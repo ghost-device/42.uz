@@ -9,6 +9,8 @@ public class CourseOfUserService extends BaseService<CoursesOfUsersEntity, Cours
     public Integer userCourses(){
         return repo.userCourses();
     }
+
+
 }
 
 

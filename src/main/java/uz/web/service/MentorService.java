@@ -8,4 +8,8 @@ public class MentorService extends BaseService<MentorEntity, MentorRepo>{
     public Integer mentorNumber(){
         return repo.mentorNumber();
     }
+
+
 }
+
+

@@ -9,6 +9,8 @@ public class CourseService extends BaseService<CourseEntity, CourseRepo>{
         return repo.coursesNumber();
     }
 
+
+
 }
 
 

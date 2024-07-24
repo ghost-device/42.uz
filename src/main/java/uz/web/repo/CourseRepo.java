@@ -13,6 +13,8 @@ public class CourseRepo extends BaseRepo<CourseEntity>{
         return entityManager.createQuery("select count(*) from CourseEntity ", Integer.class).getSingleResult();
     }
 
+
+
 }
 
 
