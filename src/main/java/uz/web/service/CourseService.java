@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class CourseService extends BaseService<CourseEntity, CourseRepo> {
-    public List<CourseEntity> findAllCourse() {
+    public List<CourseEntity> getAllCourse() {
         return repo.getAllCourse();
     }
 
-    public List<CourseEntity> findCoursesByUser(UUID id) {
+    public List<CourseEntity> getCoursesByUser(UUID id) {
         return repo.getCoursesByUser(id);
     }
 }

@@ -14,7 +14,8 @@ public class CourseRepo extends BaseRepo<CourseEntity> {
     }
     
     public List<CourseEntity> getCoursesByUser(UUID id) {
-        return entityManager.createQuery("select u.course from CoursesOfUsersEntity u where u.user.id = :id", CourseEntity.class)
+        return entityManager
+                .createQuery("select u.course from CoursesOfUsersEntity u where u.user.id = :id", CourseEntity.class)
                 .setParameter("id", id)
                 .getResultList();
     }

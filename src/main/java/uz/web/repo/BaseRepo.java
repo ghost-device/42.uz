@@ -32,7 +32,5 @@ public abstract class BaseRepo<T extends BaseEntity> {
 
     public void update(T t) {
         entityManager.merge(t);
-
     }
-
 }
