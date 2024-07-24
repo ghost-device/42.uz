@@ -1,26 +1,15 @@
 package uz.web.service;
 
 import uz.web.domain.entity.BaseEntity;
-import uz.web.repo.BaseRepo;
 
 import java.util.UUID;
 
-public abstract class BaseService<T extends BaseEntity, R extends BaseRepo<T>> {
-    protected R repo;
+public interface BaseService<T extends BaseEntity> {
+    void save(T t);
 
-    public void save(T t){
-        repo.save(t);
-    }
+    T findById(UUID id);
 
-    public T findById(UUID id){
-        return repo.findById(id);
-    }
+    void delete(UUID id);
 
-    public void delete(UUID id){
-        repo.delete(id);
-    }
-
-    public void update(T t){
-        repo.update(t);
-    }
+    void update(T t);
 }

@@ -19,6 +19,6 @@ public class MentorEntity extends BaseEntity {
     private String name;
     private String biography;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mentor")
     private List<CourseEntity> courseEntities;
 }

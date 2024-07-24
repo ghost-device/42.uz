@@ -1,5 +1,6 @@
 package uz.web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -10,6 +11,7 @@ import java.util.Properties;
 
 @Configuration
 public class MailCfg {
+    @Autowired
     private Environment environment;
 
     @Bean
@@ -18,8 +20,8 @@ public class MailCfg {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername(environment.getRequiredProperty("mail.username"));
-        mailSender.setPassword(environment.getRequiredProperty("mail.password"));
+        mailSender.setUsername("elmurodovjamshid38@gmail.com");
+        mailSender.setPassword("bvrcjsojhksydjnf");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

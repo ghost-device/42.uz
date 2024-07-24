@@ -1,6 +1,6 @@
 package uz.web.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +15,8 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class HibernateCfg {
-    @Autowired
     private final Environment environment;
 
     @Bean

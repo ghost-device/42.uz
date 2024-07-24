@@ -2,6 +2,7 @@ package uz.web.service;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,13 +11,14 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RequiredArgsConstructor
 public class CloudService {
       private final Storage storage;
       private final String bucketName;
 
       public CloudService() throws IOException {
            this.storage = StorageOptions.newBuilder()
-                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/images-428112-d477a66b2fd3.json")))
+                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("/Users/jamshidelmurodov/Desktop/42.uz2/src/main/resources/images-428112-d477a66b2fd3.json")))
                    .build()
                    .getService();
            this.bucketName = "videos42";

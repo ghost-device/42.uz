@@ -30,5 +30,5 @@ public class UserEntity extends BaseEntity {
     private List<CommentEntity> commentEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<CourseEntity> courseEntities;
+    private List<CoursesOfUsersEntity> coursesOfUsersEntities;
 }

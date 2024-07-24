@@ -1,5 +1,8 @@
 package uz.web.service;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DTO.RatingDTO;
@@ -10,9 +13,16 @@ import uz.web.repo.RatingRepo;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Service
-public class RatingService extends BaseService<RatingEntity, RatingRepo> {
+public class RatingService implements BaseService<RatingEntity> {
+    @Autowired
+    private RatingRepo repo;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private CourseService courseService;
 
     @Transactional
@@ -32,5 +42,25 @@ public class RatingService extends BaseService<RatingEntity, RatingRepo> {
             ratingSum += rating.getRating();
         }
         return ratingSum / ratings.size();
+    }
+
+    @Override
+    public void save(RatingEntity ratingEntity) {
+
+    }
+
+    @Override
+    public RatingEntity findById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public void delete(UUID id) {
+
+    }
+
+    @Override
+    public void update(RatingEntity ratingEntity) {
+
     }
 }
