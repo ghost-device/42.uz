@@ -11,7 +11,6 @@ import uz.web.domain.enumerators.PaymentStatus;
 import uz.web.domain.exceptions.UserNotFoundException;
 import uz.web.repo.PaymentRepo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +24,7 @@ public class PaymentService extends BaseService<PaymentEntity> {
     private final CloudService cloudService;
 
     @Transactional
-    public void purchaseCourse(PaymentDTO payment) {
+    public void fillBalance(PaymentDTO payment) {
         paymentRepo.save(PaymentEntity.builder()
                 .user(userService.findById(payment.getId()))
                 .amount(payment.getAmount())
@@ -34,7 +33,7 @@ public class PaymentService extends BaseService<PaymentEntity> {
                 .build());
     }
 
-    public List<PaymentHistoryDAO> paymentHistory(UUID userId) {
+    public List<PaymentHistoryDAO> paymentHistoryOfUser(UUID userId) {
         UserEntity user = userService.findById(userId);
 
         if (user == null) {
@@ -61,6 +60,10 @@ public class PaymentService extends BaseService<PaymentEntity> {
     public String paymentCheckUrl(String paymentCheckId) {
         return cloudService.getFileUrl(paymentCheckId);
     }
+
+    // admin
+
+    // accept
 
     @Override
     public void save(PaymentEntity paymentEntity) {

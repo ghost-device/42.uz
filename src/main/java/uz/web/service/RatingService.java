@@ -20,7 +20,9 @@ public class RatingService extends BaseService<RatingEntity> {
 
     @Transactional
     public void rateCourse(RatingDTO rating) {
-        ratingRepo.save(RatingEntity.builder()
+        // exception
+
+        this.save(RatingEntity.builder()
                 .user(userService.findById(rating.getUserId()))
                 .rating(rating.getRating())
                 .course(courseService.findById(rating.getCourseId()))

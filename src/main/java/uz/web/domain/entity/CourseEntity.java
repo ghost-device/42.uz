@@ -18,6 +18,7 @@ public class CourseEntity extends BaseEntity {
     private String description;
     private Integer price;
     private String imageId;
+    private boolean isActive;
 
     @JoinColumn(name = "mentor_id")
     @ManyToOne

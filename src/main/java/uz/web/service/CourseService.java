@@ -53,7 +53,7 @@ public class CourseService extends BaseService<CourseEntity> {
     }
 
     @Transactional
-    public void saveCourse(CourseDTO courseDTO) throws IOException {
+    public void saveCourse(CourseDTO courseDTO) {
         this.save(
                 CourseEntity.builder()
                         .name(courseDTO.getName())

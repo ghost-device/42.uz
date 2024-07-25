@@ -55,18 +55,21 @@ public class UserService extends BaseService<UserEntity> {
 
     @Override
     public void save(UserEntity userEntity) {
+        userRepo.save(userEntity);
     }
 
     @Override
     public UserEntity findById(UUID id) {
-        return null; // Implement findById logic
+        return userRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
+        userRepo.delete(id);
     }
 
     @Override
     public void update(UserEntity userEntity) {
+        userRepo.update(userEntity);
     }
 }
