@@ -24,7 +24,6 @@ public class PaymentService extends BaseService<PaymentEntity> {
     private final PaymentRepo paymentRepo;
     private final UserService userService;
     private final CloudService cloudService;
-    private final CourseService courseService;
 
     @Transactional
     public void fillBalance(PaymentDTO payment) {

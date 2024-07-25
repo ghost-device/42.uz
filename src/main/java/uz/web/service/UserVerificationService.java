@@ -40,11 +40,11 @@ public class UserVerificationService {
         try {
             userService.checkEmail(email);
 
+            throw new EmailNotFoundException("Bu emaildan foydalanilgan yoki email topilmadi!");
+        } catch (Exception e){
             javaMailSender.send(mailMessage);
 
             codeService.save(new CodeEntity(email, code, LocalDateTime.now().plusMinutes(1)));
-        } catch (Exception e){
-            throw new EmailNotFoundException("Bu emaildan foydalanilgan yoki email topilmadi!");
         }
     }
 

@@ -11,14 +11,13 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
 public class CloudService {
       private final Storage storage;
       private final String bucketName;
 
       public CloudService() throws IOException {
            this.storage = StorageOptions.newBuilder()
-                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("D:\\PDP\\Bootcamp\\Java\\JavaBackend(Jamshid aka)\\42.uz\\src\\main\\resources\\images-428112-d477a66b2fd3.json")))
+                   .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("/Users/jamshidelmurodov/Desktop/42.uz23/src/main/resources/images-428112-d477a66b2fd3.json")))
                    .build()
                    .getService();
            this.bucketName = "videos42";
