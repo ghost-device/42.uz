@@ -2,9 +2,12 @@ package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DAO.LessonForModuleDAO;
 import uz.web.domain.DAO.LessonWithVideoDAO;
+import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.LessonEntity;
+import uz.web.domain.entity.ModuleEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +34,30 @@ public class LessonService implements BaseService<LessonEntity> {
         return new LessonWithVideoDAO(lesson.getName(), cloudService.getFileUrl(lesson.getVideoId()));
     }
 
+//    @Transactional
+//    public void saveLesson(LessonDTO lessonDTO){
+//        int orderNum = lessonDTO.getOrderNum();
+//
+//        List<LessonEntity> lessonEntities = moduleService.findById(lessonDTO.getModuleId()).getLessonEntities();
+//
+//        for (LessonEntity lesson : lessonEntities) {
+//            if (lesson.getOrderNum() >= orderNum){
+//                lesson.setOrderNum(lesson.getOrderNum() + 1);
+//            }
+//        }
+//
+//        this.save(LessonEntity.builder()
+//                        .name(lessonDTO.getName())
+//                        .module(moduleService.findById(lessonDTO.getModuleId()))
+//                        .videoId(cloudService.uploadFile(lessonDTO.getVideoOfLesson()))
+//                        .videoDuration()
+//                        .build()
+//        );
+//    }
+
     @Override
     public void save(LessonEntity lessonEntity) {
-        
+
     }
 
     @Override
