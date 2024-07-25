@@ -9,30 +9,30 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class CodeService implements BaseService<CodeEntity> {
-    private final CodeRepo repo;
+public class CodeService extends BaseService<CodeEntity> {
+    private final CodeRepo codeRepo;
 
     public CodeEntity getCodeByEmail(String email){
-        return repo.getCodeByEmail(email);
+        return codeRepo.getCodeByEmail(email);
     }
 
     @Override
     public void save(CodeEntity codeEntity) {
-        repo.save(codeEntity);
+        codeRepo.save(codeEntity);
     }
 
     @Override
     public CodeEntity findById(UUID id) {
-        return repo.findById(id);
+        return codeRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
-        repo.delete(id);
+        codeRepo.delete(id);
     }
 
     @Override
     public void update(CodeEntity codeEntity) {
-        repo.update(codeEntity);
+        codeRepo.update(codeEntity);
     }
 }

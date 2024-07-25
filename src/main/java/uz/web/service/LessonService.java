@@ -2,12 +2,9 @@ package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DAO.LessonForModuleDAO;
 import uz.web.domain.DAO.LessonWithVideoDAO;
-import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.LessonEntity;
-import uz.web.domain.entity.ModuleEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class LessonService implements BaseService<LessonEntity> {
+public class LessonService extends BaseService<LessonEntity> {
     private final CloudService cloudService;
     private final ModuleService moduleService;
 

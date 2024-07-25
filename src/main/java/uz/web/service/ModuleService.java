@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ModuleService implements BaseService<ModuleEntity> {
+public class ModuleService extends BaseService<ModuleEntity> {
     private final CourseService courseService;
 
     public List<ModuleDAO> getModulesOfCourse(UUID courseId){

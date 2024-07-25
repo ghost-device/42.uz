@@ -1,28 +1,29 @@
 package uz.web.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DAO.CourseDAO;
+import uz.web.domain.DTO.CourseDTO;
 import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.repo.CourseRepo;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class CourseService implements BaseService<CourseEntity> {
-    private final CourseRepo repo;
+public class CourseService extends BaseService<CourseEntity> {
+    private final CourseRepo courseRepo;
     private final CloudService cloudService;
     private final UserService userService;
+    private final MentorService mentorService;
 
     public List<CourseDAO> getAllCourse() {
-        return getCourseDAOS(repo.getAllCourse());
+        return getCourseDAOS(courseRepo.getAllCourse());
     }
 
     public List<CourseDAO> getCoursesByUser(UUID userId) {
@@ -51,9 +52,24 @@ public class CourseService implements BaseService<CourseEntity> {
         return list;
     }
 
+    @Transactional
+    public void saveCourse(CourseDTO courseDTO) throws IOException {
+        this.save(
+                CourseEntity.builder()
+                        .name(courseDTO.getName())
+                        .description(courseDTO.getDescription())
+                        .price(courseDTO.getPrice())
+                        .imageId(
+                                cloudService.uploadFile(courseDTO.getFaceImgOfCourse())
+                        )
+                        .mentor(mentorService.findById(courseDTO.getMentorId()))
+                        .build()
+        );
+    }
+
     @Override
     public void save(CourseEntity courseEntity) {
-
+        courseRepo.save(courseEntity);
     }
 
     @Override

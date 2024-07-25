@@ -1,5 +1,6 @@
 package uz.web.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +11,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
+@RequiredArgsConstructor
 public class MailCfg {
-    @Autowired
-    private Environment environment;
+    private final Environment environment;
 
     @Bean
     public JavaMailSender javaMailSender(){

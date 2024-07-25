@@ -13,9 +13,9 @@ import uz.web.domain.exceptions.UserNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
-public class CourseOfUsersService implements BaseService<CoursesOfUsersEntity> {
+@Service
+public class CourseOfUsersService extends BaseService<CoursesOfUsersEntity> {
     private final CourseService courseService;
     private final UserService userService;
 

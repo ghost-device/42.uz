@@ -13,4 +13,5 @@ public class PaymentHistoryDAO {
     private Integer amount;
     private PaymentStatus status;
     private LocalDateTime paymentDate;
+    private String paymentCheckId;
 }

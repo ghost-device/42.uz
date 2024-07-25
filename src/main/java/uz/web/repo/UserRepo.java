@@ -1,12 +1,8 @@
 package uz.web.repo;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import uz.web.domain.entity.CourseEntity;
 import org.springframework.stereotype.Repository;
 import uz.web.domain.entity.UserEntity;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository

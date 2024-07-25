@@ -11,6 +11,7 @@ import uz.web.domain.enumerators.PaymentStatus;
 import uz.web.domain.exceptions.UserNotFoundException;
 import uz.web.repo.PaymentRepo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,16 +19,17 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class PaymentService implements BaseService<PaymentEntity> {
-    private final PaymentRepo repo;
+public class PaymentService extends BaseService<PaymentEntity> {
+    private final PaymentRepo paymentRepo;
     private final UserService userService;
+    private final CloudService cloudService;
 
     @Transactional
     public void purchaseCourse(PaymentDTO payment) {
-        repo.save(PaymentEntity.builder()
+        paymentRepo.save(PaymentEntity.builder()
                 .user(userService.findById(payment.getId()))
                 .amount(payment.getAmount())
-                .paymentCheckId(payment.getRecipeUrl())
+                .paymentCheckId(cloudService.uploadFile(payment.getMultipartOfPaymentCheck()))
                 .status(PaymentStatus.PENDING)
                 .build());
     }
@@ -44,6 +46,7 @@ public class PaymentService implements BaseService<PaymentEntity> {
 
         for (PaymentEntity payment : paymentEntities) {
             paymentHistory.add(PaymentHistoryDAO.builder()
+                    .paymentCheckId(payment.getPaymentCheckId())
                     .status(payment.getStatus())
                     .amount(payment.getAmount())
                     .paymentDate(payment.getUpdatedAt())
@@ -55,23 +58,27 @@ public class PaymentService implements BaseService<PaymentEntity> {
         return paymentHistory;
     }
 
+    public String paymentCheckUrl(String paymentCheckId) {
+        return cloudService.getFileUrl(paymentCheckId);
+    }
+
     @Override
     public void save(PaymentEntity paymentEntity) {
-        repo.save(paymentEntity);
+        paymentRepo.save(paymentEntity);
     }
 
     @Override
     public PaymentEntity findById(UUID id) {
-        return repo.findById(id);
+        return paymentRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
-        repo.delete(id);
+        paymentRepo.delete(id);
     }
 
     @Override
     public void update(PaymentEntity paymentEntity) {
-        repo.update(paymentEntity);
+        paymentRepo.update(paymentEntity);
     }
 }

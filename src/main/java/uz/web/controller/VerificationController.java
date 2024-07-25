@@ -11,7 +11,6 @@ import uz.web.domain.DTO.EmailDTO;
 import uz.web.service.UserVerificationService;
 
 @Controller
-
 @RequiredArgsConstructor
 @RequestMapping("/verification")
 public class VerificationController {

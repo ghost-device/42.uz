@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class UserService implements BaseService<UserEntity> {
-    private final UserRepo repo;
+public class UserService extends BaseService<UserEntity> {
+    private final UserRepo userRepo;
 
     @Transactional
     public void register(AuthDTO registerDTO) {
@@ -29,10 +29,10 @@ public class UserService implements BaseService<UserEntity> {
     }
 
     public UserDao login(AuthDTO authDTO) {
-        UserEntity user = null;
+        UserEntity user;
 
         try {
-            user = repo.getUserByEmail(authDTO.getEmail());
+            user = userRepo.getUserByEmail(authDTO.getEmail());
         } catch (Exception e) {
             throw new AuthFailedException("Email is incorrect!");
         }
@@ -46,16 +46,15 @@ public class UserService implements BaseService<UserEntity> {
 
     @Transactional
     public void setUserBalanceById(UUID id, Integer amount) {
-        repo.setBalanceById(id, amount);
+        userRepo.setBalanceById(id, amount);
     }
 
     public void checkEmail(String email) {
-        repo.getUserByEmail(email);
+        userRepo.getUserByEmail(email);
     }
 
     @Override
     public void save(UserEntity userEntity) {
-        // Implement save logic
     }
 
     @Override
@@ -65,7 +64,6 @@ public class UserService implements BaseService<UserEntity> {
 
     @Override
     public void delete(UUID id) {
-        // Implement delete logic
     }
 
     @Override

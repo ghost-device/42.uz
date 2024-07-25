@@ -24,11 +24,16 @@ public class CloudService {
            this.bucketName = "videos42";
       }
 
-      public String uploadFile(MultipartFile file) throws IOException {
+      public String uploadFile(MultipartFile file)  {
           String fileName = UserVerificationService.getUniqueCode();
 
           BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
-          storage.create(blobInfo, file.getBytes());
+
+          try {
+              storage.create(blobInfo, file.getBytes());
+          } catch (IOException e) {
+              throw new RuntimeException("Video exception!");
+          }
 
           return fileName;
       }
