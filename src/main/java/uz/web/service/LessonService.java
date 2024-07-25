@@ -3,13 +3,18 @@ package uz.web.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.web.domain.DAO.CourseDAO;
 import uz.web.domain.DAO.LessonForModuleDAO;
 import uz.web.domain.DAO.LessonWithVideoDAO;
 import uz.web.domain.DTO.LessonDTO;
+import uz.web.domain.entity.CourseEntity;
+import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.domain.entity.LessonEntity;
+import uz.web.domain.exceptions.ThisCourseIsNotPurchasedException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,6 +22,7 @@ import java.util.UUID;
 public class LessonService extends BaseService<LessonEntity> {
     private final CloudService cloudService;
     private final ModuleService moduleService;
+    private final CourseOfUsersService courseOfUsersService;
 
     public List<LessonForModuleDAO> getLessonsOfModule(UUID moduleId){
         List<LessonForModuleDAO> list = new ArrayList<>();
@@ -28,10 +34,13 @@ public class LessonService extends BaseService<LessonEntity> {
         return list;
     }
 
-    public LessonWithVideoDAO getLessonWithVideo(UUID lessonId){
-        // exception
-
+    public LessonWithVideoDAO getLessonWithVideo(UUID lessonId, UUID userId){
         LessonEntity lesson = this.findById(lessonId);
+
+        UUID courseId = lesson.getModule().getCourse().getId();
+
+        courseOfUsersService.checkPurchase(userId, courseId);
+
         return new LessonWithVideoDAO(lesson.getName(), cloudService.getFileUrl(lesson.getVideoId()));
     }
 
@@ -69,7 +78,6 @@ public class LessonService extends BaseService<LessonEntity> {
 
     @Override
     public void delete(UUID id) {
-
     }
 
     @Override

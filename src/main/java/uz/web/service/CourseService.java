@@ -9,10 +9,10 @@ import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.repo.CourseRepo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,17 +22,18 @@ public class CourseService extends BaseService<CourseEntity> {
     private final UserService userService;
     private final MentorService mentorService;
 
-    public List<CourseDAO> getAllCourse() {
-        return getCourseDAOS(courseRepo.getAllCourse());
+    public List<CourseDAO> getAllCourse(boolean isActive) {
+        return getCourseDAOS(courseRepo.getAllCourse(isActive));
     }
 
-    public List<CourseDAO> getCoursesByUser(UUID userId) {
+    public List<CourseDAO> getCoursesOfUser(UUID userId) {
         return getCourseDAOS(
                 userService.findById(userId)
                         .getCoursesOfUsersEntities()
                         .stream()
                         .map(CoursesOfUsersEntity::getCourse)
-                        .toList()
+                        .filter(CourseEntity::isActive)
+                        .collect(Collectors.toList())
         );
     }
 

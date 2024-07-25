@@ -8,7 +8,9 @@ import java.util.UUID;
 
 @Repository
 public class CourseRepo extends BaseRepo<CourseEntity> {
-    public List<CourseEntity> getAllCourse() {
-        return entityManager.createQuery("from CourseEntity c", CourseEntity.class).getResultList();
+    public List<CourseEntity> getAllCourse(boolean isActive) {
+        return entityManager
+                .createQuery("from CourseEntity c" + (isActive ? " where c.isActive" : ""), CourseEntity.class)
+                .getResultList();
     }
 }

@@ -8,9 +8,11 @@ import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.domain.entity.UserEntity;
 import uz.web.domain.exceptions.CourseNotFoundException;
 import uz.web.domain.exceptions.InvalidBalanceException;
+import uz.web.domain.exceptions.ThisCourseIsNotPurchasedException;
 import uz.web.domain.exceptions.UserNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -40,6 +42,11 @@ public class CourseOfUsersService extends BaseService<CoursesOfUsersEntity> {
         userCourses.add(new CoursesOfUsersEntity(user, course));
         user.setCoursesOfUsersEntities(userCourses);
         userService.update(user);
+    }
+
+    public void checkPurchase(UUID userId, UUID courseId) {
+        Optional<CourseEntity> list = userService.findById(userId).getCoursesOfUsersEntities().stream().map(CoursesOfUsersEntity::getCourse).filter((c) -> c.getId().equals(courseId)).findFirst();
+        list.orElseThrow(() -> new ThisCourseIsNotPurchasedException("You are not purchase for this course!"));
     }
 
     @Override

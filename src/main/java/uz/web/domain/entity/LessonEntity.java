@@ -25,7 +25,4 @@ public class LessonEntity extends BaseEntity {
     private String videoId;
 
     private Integer videoDuration;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
-    private List<LessonOfUserEntity> lessonOfUserEntities;
 }
