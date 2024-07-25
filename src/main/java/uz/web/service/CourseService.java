@@ -26,6 +26,11 @@ public class CourseService extends BaseService<CourseEntity> {
         return getCourseDAOS(courseRepo.getAllCourse());
     }
 
+    public List<CourseDAO> getCoursesByMentorId(UUID mentorId) {
+        return getCourseDAOS(courseRepo.getCoursesByMentorId(mentorId));
+    }
+
+
     public List<CourseDAO> getCoursesByUser(UUID userId) {
         return getCourseDAOS(
                 userService.findById(userId)
