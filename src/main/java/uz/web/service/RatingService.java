@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DTO.RatingDTO;
 import uz.web.domain.entity.CourseEntity;
+import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.domain.entity.RatingEntity;
+import uz.web.domain.entity.UserEntity;
+import uz.web.domain.exceptions.CourseNotFoundException;
+import uz.web.domain.exceptions.UserNotFoundException;
 import uz.web.repo.RatingRepo;
 
 import java.util.List;
@@ -20,7 +24,29 @@ public class RatingService extends BaseService<RatingEntity> {
 
     @Transactional
     public void rateCourse(RatingDTO rating) {
-        // exception
+        UserEntity user = userService.findById(rating.getUserId());
+        CourseEntity course = courseService.findById(rating.getCourseId());
+        if (user == null) {
+            throw new UserNotFoundException("User not found!");
+        }
+        if (course == null) {
+            throw new CourseNotFoundException("Course not found!");
+        }
+
+        List<CoursesOfUsersEntity> userCourses = user.getCoursesOfUsersEntities();
+
+        for (CoursesOfUsersEntity courses : userCourses) {
+            if (courses.getCourse().getId().equals(course.getId())) {
+                List<RatingEntity> ratings = course.getRatingEntities();
+                ratings.add(RatingEntity.builder()
+                        .course(courses.getCourse())
+                        .rating(rating.getRating())
+                        .user(user)
+                        .build());
+                course.setRatingEntities(ratings);
+                break;
+            }
+        }
 
         this.save(RatingEntity.builder()
                 .user(userService.findById(rating.getUserId()))
@@ -41,21 +67,21 @@ public class RatingService extends BaseService<RatingEntity> {
 
     @Override
     public void save(RatingEntity ratingEntity) {
-
+        ratingRepo.save(ratingEntity);
     }
 
     @Override
     public RatingEntity findById(UUID id) {
-        return null;
+        return ratingRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
-
+        ratingRepo.delete(id);
     }
 
     @Override
     public void update(RatingEntity ratingEntity) {
-
+        ratingRepo.update(ratingEntity);
     }
 }

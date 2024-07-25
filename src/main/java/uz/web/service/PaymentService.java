@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.web.domain.DAO.PaymentHistoryDAO;
+import uz.web.domain.DTO.AcceptPaymentDTO;
 import uz.web.domain.DTO.PaymentDTO;
 import uz.web.domain.entity.PaymentEntity;
 import uz.web.domain.entity.UserEntity;
 import uz.web.domain.enumerators.PaymentStatus;
+import uz.web.domain.exceptions.CourseNotFoundException;
 import uz.web.domain.exceptions.UserNotFoundException;
 import uz.web.repo.PaymentRepo;
 
@@ -22,6 +24,7 @@ public class PaymentService extends BaseService<PaymentEntity> {
     private final PaymentRepo paymentRepo;
     private final UserService userService;
     private final CloudService cloudService;
+    private final CourseService courseService;
 
     @Transactional
     public void fillBalance(PaymentDTO payment) {
@@ -61,9 +64,32 @@ public class PaymentService extends BaseService<PaymentEntity> {
         return cloudService.getFileUrl(paymentCheckId);
     }
 
-    // admin
+    public List<PaymentEntity> allPayments() {
+        return paymentRepo.getAll();
+    }
 
-    // accept
+    @Transactional
+    public List<PaymentEntity> acceptPayment(AcceptPaymentDTO acceptPayment) {
+        if (userService.findById(acceptPayment.getBuyerId()) == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        if (userService.findById(acceptPayment.getCourseId()) == null) {
+            throw new CourseNotFoundException("Course not found");
+        }
+        List<PaymentEntity> payments = paymentRepo.getPaymentsByStatus(acceptPayment.getStatus());
+        for (PaymentEntity payment : payments) {
+            if (payment.getStatus() == PaymentStatus.PENDING) {
+                UserEntity user = userService.findById(acceptPayment.getBuyerId());
+                user.setBalance(user.getBalance() - payment.getAmount());
+                payment.setStatus(PaymentStatus.ACCEPTED);
+                this.update(payment);
+                userService.setUserBalanceById(user.getId(), payment.getAmount());
+                break;
+            }
+        }
+        return payments;
+    }
+
 
     @Override
     public void save(PaymentEntity paymentEntity) {
