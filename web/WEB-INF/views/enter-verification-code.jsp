@@ -72,23 +72,65 @@
                             <input id="code" name="code" type="text" class="form-control" placeholder="Code" required>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" onclick="resendVerificationCode()">Resend</button>
+                            <button type="button" class="btn btn-secondary" id="resendButton" onclick="resendVerificationCode()" disabled>Resend</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
+                    <p class="text-center mt-3" id="timer">You can resend the code in <span id="time">60</span> seconds.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Include Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
     function resendVerificationCode() {
-        // Implement the resend logic here, e.g., using AJAX to call a backend endpoint
-        alert("Resend verification code button clicked!");
+        const email = document.getElementById('email').value;
+
+        fetch('${pageContext.request.contextPath}/verification/verify-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Verification code resent successfully!");
+                    startTimer();
+                } else {
+                    alert("Error resending verification code: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while resending the verification code.");
+            });
     }
+
+    function startTimer() {
+        let timer = 60;
+        const resendButton = document.getElementById('resendButton');
+        const timerElement = document.getElementById('time');
+
+        resendButton.disabled = true;
+
+        const interval = setInterval(() => {
+            timer--;
+            timerElement.textContent = timer;
+
+            if (timer <= 0) {
+                clearInterval(interval);
+                resendButton.disabled = false;
+                timerElement.textContent = '60';
+            }
+        }, 1000);
+    }
+
+    // Start the timer when the page loads
+    window.onload = startTimer;
 </script>
 </body>
 </html>
