@@ -1,28 +1,50 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Verification</title>
+    <title>Main Page</title>
+    <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         body {
-            background-color: #f8f9fa; /* Light grey background */
-            color: #212529; /* Dark grey/black text */
+            background-color: white; /* Light grey background */
+            color: #212529; /* Dark grey text */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
         }
-        .card {
-            background-color: #ffffff; /* White card background */
-            border-color: #dee2e6; /* Light grey border */
+        .container {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .text-content {
+            flex: 1;
+            text-align: left;
+            font-size: 2rem; /* Increase font size for larger text */
+            padding: 20px;
+        }
+        .image-content {
+            flex: 1;
+            text-align: right;
+            padding: 20px;
         }
         .btn-primary {
             background-color: #343a40; /* Dark grey button */
             border-color: #343a40; /* Dark grey button border */
         }
-        .form-text {
-            color: #6c757d; /* Medium grey text */
+        .image-content img {
+            max-width: 100%;
+            height: auto; /* Ensure image scales properly */
+            border-bottom: 5px solid #343a40; /* Dark grey bottom border for image */
         }
     </style>
 </head>
 <body>
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-1 p-3 border-dark" style="font-size: 23px">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">
@@ -48,34 +70,20 @@
         </div>
     </div>
 </nav>
-<div class="container p-4">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Emailni Tasdiqlash</h3>
-                </div>
-                <div class="card-body">
-                    <c:if test="${not empty errorMessage}">
-                        <div class="alert alert-danger" role="alert">
-                                ${errorMessage}
-                        </div>
-                    </c:if>
 
-                    <form action="${pageContext.request.contextPath}/verification/verify-email" method="post">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email manzil</label>
-                            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Biz sizning email manzilingizni oshkor qilmaymiz!</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Yuborish</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- Text and Image Content -->
+<div class="container m-5 rounded" style="background-color: #F1F5F9">
+    <div class="text-content">
+        <p style="font-size: 60px"><b>42 kunda backend</b></p>
+        <p style="font-size: 60px"><b>dasturlashni o'rganing</b></p>
+        <p style="font-size: 20px">⚡️ 42 kun o'z ustingizda ishlang va kelajagingiz sari yo'l toping!</p>
+        <button class="btn btn-primary mt-4">⚡️Boshlash</button>
+    </div>
+    <div class="image-content">
+        <img src="https://storage.googleapis.com/videos42/hey.svg" class="img-fluid" alt="Placeholder Image">
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
-

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.web.domain.entity.CodeEntity;
 import uz.web.repo.CodeRepo;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -18,7 +19,16 @@ public class CodeService extends BaseService<CodeEntity> {
 
     @Override
     public void save(CodeEntity codeEntity) {
-        codeRepo.save(codeEntity);
+        try {
+            CodeEntity code = this.getCodeByEmail(codeEntity.getEmail());
+
+            code.setCode(codeEntity.getCode());
+            code.setExpiredAt(LocalDateTime.now().plusMinutes(1));
+
+            this.update(code);
+        } catch (Exception e){
+            codeRepo.save(codeEntity);
+        }
     }
 
     @Override

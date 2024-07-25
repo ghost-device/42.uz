@@ -11,6 +11,7 @@ import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.domain.entity.LessonEntity;
 import uz.web.domain.exceptions.ThisCourseIsNotPurchasedException;
+import uz.web.repo.LessonRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class LessonService extends BaseService<LessonEntity> {
+    private final LessonRepo lessonRepo;
     private final CloudService cloudService;
     private final ModuleService moduleService;
     private final CourseOfUsersService courseOfUsersService;
@@ -68,20 +70,21 @@ public class LessonService extends BaseService<LessonEntity> {
 
     @Override
     public void save(LessonEntity lessonEntity) {
-
+        lessonRepo.save(lessonEntity);
     }
 
     @Override
     public LessonEntity findById(UUID id) {
-        return null;
+        return lessonRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
+        lessonRepo.delete(id);
     }
 
     @Override
     public void update(LessonEntity lessonEntity) {
-
+        lessonRepo.update(lessonEntity);
     }
 }

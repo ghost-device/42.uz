@@ -16,26 +16,31 @@ import uz.web.service.UserVerificationService;
 public class VerificationController {
     private final UserVerificationService userVerificationService;
 
-    @RequestMapping("/send-code-to-email")
+    @RequestMapping("/verify-email")
     public String throwToSendCodePage(){
         return "send-code-to-email";
     }
 
-    @RequestMapping(value = "/send-code-to-email", method = RequestMethod.POST)
+    @RequestMapping(value = "/verify-email", method = RequestMethod.POST)
     public String sendCodeToEmail(@ModelAttribute EmailDTO emailDTO, Model model){
         model.addAttribute("email", emailDTO.getEmail());
 
-        userVerificationService.sendCodeToEmail(emailDTO.getEmail());
-        return "enter-verification-code";
+        try {
+            userVerificationService.sendCodeToEmail(emailDTO.getEmail());
+            return "enter-verification-code";
+        } catch (Exception e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "send-code-to-email";
+        }
     }
 
-    @RequestMapping(value = "/check-code", method = RequestMethod.POST)
+    @RequestMapping(value = "/verify-check", method = RequestMethod.POST)
     public String checkCode(@ModelAttribute CodeDTO codeDTO, Model model){
         model.addAttribute("email", codeDTO.getEmail());
 
         try {
             userVerificationService.checkCode(codeDTO.getEmail(), codeDTO.getCode());
-            return "user-details";
+            return "register";
         } catch (Exception e){
             model.addAttribute("errorMessage", e.getMessage());
             return "enter-verification-code";

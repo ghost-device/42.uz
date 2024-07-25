@@ -1,28 +1,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: jamshidelmurodov
+  Date: 25/07/24
+  Time: 15:22
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Verification</title>
+    <title>Password Toggle</title>
+    <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
-        body {
-            background-color: #f8f9fa; /* Light grey background */
-            color: #212529; /* Dark grey/black text */
+        .password-container {
+            position: relative;
         }
-        .card {
-            background-color: #ffffff; /* White card background */
-            border-color: #dee2e6; /* Light grey border */
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            cursor: pointer;
         }
         .btn-primary {
             background-color: #343a40; /* Dark grey button */
             border-color: #343a40; /* Dark grey button border */
         }
-        .form-text {
-            color: #6c757d; /* Medium grey text */
+        .password-toggle:hover {
+            color: #007bff; /* Highlight color on hover */
         }
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-1 p-3 border-dark" style="font-size: 23px">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">
@@ -48,12 +61,13 @@
         </div>
     </div>
 </nav>
-<div class="container p-4">
+
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Emailni Tasdiqlash</h3>
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="text-center">Parol yaratish</h3>
                 </div>
                 <div class="card-body">
                     <c:if test="${not empty errorMessage}">
@@ -62,20 +76,37 @@
                         </div>
                     </c:if>
 
-                    <form action="${pageContext.request.contextPath}/verification/verify-email" method="post">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email manzil</label>
-                            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Biz sizning email manzilingizni oshkor qilmaymiz!</div>
+                    <form action="${pageContext.request.contextPath}/auth/register" method="post">
+                        <h5 class="text-center mb-4">${email}</h5>
+                        <div class="password-container mb-3">
+                            <input type="hidden" value="${email}" name="email">
+                            <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Parolingizni kiriting">
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <span id="toggleIcon">👁️</span>
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary">Yuborish</button>
+                        <button type="submit" class="btn btn-primary btn-block">Yuborish</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleIcon = document.getElementById('toggleIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.textContent = '🙈';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.textContent = '👁️';
+        }
+    }
+</script>
 </body>
 </html>
 

@@ -22,8 +22,8 @@ public class CourseService extends BaseService<CourseEntity> {
     private final UserService userService;
     private final MentorService mentorService;
 
-    public List<CourseDAO> getAllCourse() {
-        return getCourseDAOS(courseRepo.getAllCourse());
+    public List<CourseDAO> getAllCourse(boolean isActive) {
+        return getCourseDAOS(courseRepo.getAllCourse(isActive));
     }
 
     public List<CourseDAO> getCoursesByMentorId(UUID mentorId) {
