@@ -11,4 +11,11 @@ public class CourseRepo extends BaseRepo<CourseEntity> {
     public List<CourseEntity> getAllCourse() {
         return entityManager.createQuery("from CourseEntity c", CourseEntity.class).getResultList();
     }
+
+
+    public List<CourseEntity> getCoursesByMentorId(UUID mentorId) {
+        return entityManager.createQuery(" select c from CourseEntity  c where c.mentor.id = :mentorId ", CourseEntity.class)
+                .setParameter("mentorId", mentorId)
+                .getResultList();
+    }
 }
