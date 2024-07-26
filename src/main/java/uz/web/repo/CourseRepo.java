@@ -24,4 +24,11 @@ public class CourseRepo extends BaseRepo<CourseEntity> {
                 .setParameter("mentorId", mentorId)
                 .getResultList();
     }
+
+
+    public CourseEntity findByCourseId(UUID courseId){
+        return entityManager.find(CourseEntity.class, courseId);
+    }
+
+
 }
