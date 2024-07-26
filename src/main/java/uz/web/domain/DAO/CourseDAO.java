@@ -12,7 +12,7 @@ import lombok.Setter;
 public class CourseDAO {
     private String name;
     private String description;
-    private String mentorName;
+    private String mentor;
     private boolean isActive;
     private Double price;
     private String imageUrl;

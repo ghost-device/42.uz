@@ -90,15 +90,15 @@
                 <c:forEach var="course" items="${courses}">
                     <div class="col-md-4">
                         <div class="card shadow-sm">
-                            <img src="${course.image}" class="card-img-top" alt="${course.name}">
+                            <img src="${course.imageUrl}" class="card-img-top" alt="${course.name}">
                             <div class="card-body">
                                 <h5 class="card-title">${course.name}</h5>
                                 <p class="card-text"><i class="bi bi-tag"></i> Price: $${course.price}</p>
                                 <p class="card-text"><i class="bi bi-person"></i> Mentor: ${course.mentor}</p>
-                                <p class="card-text"><i class="bi bi-check-circle"></i> Active: <c:choose>
-                                    <c:when test="${course.isActive}">Yes</c:when>
-                                    <c:otherwise>No</c:otherwise>
-                                </c:choose></p>
+<%--                                <p class="card-text"><i class="bi bi-check-circle"></i> Active: <c:choose>--%>
+<%--                                    <c:when test="${course.isActive}">Yes</c:when>--%>
+<%--                                    <c:otherwise>No</c:otherwise>--%>
+<%--                                </c:choose></p>--%>
                             </div>
                         </div>
                     </div>
