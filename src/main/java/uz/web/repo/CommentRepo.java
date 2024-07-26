@@ -8,7 +8,9 @@ import java.util.UUID;
 
 @Repository
 public class CommentRepo extends BaseRepo<CommentEntity>{
-
+    public CommentRepo() {
+        super.aClass = CommentEntity.class;
+    }
 
     public List<CommentEntity> findByComment(UUID commentId){
         return entityManager
@@ -17,8 +19,6 @@ public class CommentRepo extends BaseRepo<CommentEntity>{
                 .getResultList();
 
     }
-
-
 }
 
 

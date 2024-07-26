@@ -38,6 +38,4 @@ public class MentorService extends BaseService<MentorEntity> {
     public void update(MentorEntity mentorEntity) {
         mentorRepo.update(mentorEntity);
     }
-
-
 }

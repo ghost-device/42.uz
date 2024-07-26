@@ -1,13 +1,15 @@
 package uz.web.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.web.domain.DAO.StatisticsDAO;
 
 @Service
+@RequiredArgsConstructor
 public class StatisticsService {
-    private CourseService courseService;
-    private MentorService mentorService;
-    private CourseOfUsersService courseOfUsersService;
+    private final CourseService courseService;
+    private final MentorService mentorService;
+    private final CourseOfUsersService courseOfUsersService;
 
     public StatisticsDAO getStatistics(){
         StatisticsDAO statisticsDAO = new StatisticsDAO();
