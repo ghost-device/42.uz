@@ -10,6 +10,7 @@ import uz.web.domain.exceptions.CourseNotFoundException;
 import uz.web.domain.exceptions.InvalidBalanceException;
 import uz.web.domain.exceptions.ThisCourseIsNotPurchasedException;
 import uz.web.domain.exceptions.UserNotFoundException;
+import uz.web.repo.CourseOfUsersRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,11 @@ import java.util.UUID;
 public class CourseOfUsersService extends BaseService<CoursesOfUsersEntity> {
     private final CourseService courseService;
     private final UserService userService;
+    private final CourseOfUsersRepo courseOfUserRepo;
+
+    public List<CoursesOfUsersEntity> getAllCoursesOfUsers(){
+        return courseOfUserRepo.getAllCoursesOfUsers();
+    }
 
     @Transactional
     public void purchaseCourse(UUID courseId, UUID userId) {
