@@ -2,6 +2,7 @@ package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.MentorDAO;
 import uz.web.domain.entity.MentorEntity;
@@ -25,6 +26,7 @@ public class MentorService extends BaseService<MentorEntity> {
         return mentors;
     }
 
+    @Transactional
     public void saveMentor(MentorEntity mentor, MultipartFile file) {
         mentor.setPictureId(cloudService.uploadFile(file));
         this.save(mentor);

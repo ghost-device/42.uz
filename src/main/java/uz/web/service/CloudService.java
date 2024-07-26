@@ -20,7 +20,7 @@ public class CloudService {
                    .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("/Users/jamshidelmurodov/Desktop/42.uz23/src/main/resources/images-428112-d477a66b2fd3.json")))
                    .build()
                    .getService();
-           this.bucketName = "videos42";
+           this.bucketName = "42uzz";
       }
 
       public String uploadFile(MultipartFile file)  {

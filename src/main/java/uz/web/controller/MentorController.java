@@ -20,8 +20,7 @@ public class MentorController {
 
     @RequestMapping()
     public String mentorPage(Model model) {
-        List<MentorDAO> mentors = mentorService.getAllMentors();
-        model.addAttribute("mentors", mentors);
+        model.addAttribute("mentors", mentorService.getAllMentors());
         return "admin-mentor-page";
     }
 
@@ -56,6 +55,5 @@ public class MentorController {
         List<MentorDAO> allMentors = mentorService.getAllMentors();
         model.addAttribute("mentors", allMentors);
         return "admin-mentor-page";
-
     }
 }
