@@ -3,13 +3,9 @@ package uz.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DTO.CourseDTO;
-import uz.web.domain.DTO.CreateCourseDTO;
 import uz.web.service.CourseService;
 import uz.web.service.MentorService;
 
@@ -21,11 +17,11 @@ public class CourseController {
     private final MentorService mentorService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String throwToCreateCoursePage(@ModelAttribute CreateCourseDTO createCourseDTO,
-                                          @RequestParam("image") MultipartFile multipartFile,
+    public String throwToCreateCoursePage(@ModelAttribute CourseDTO courseDTO,
+                                          @RequestParam("img") MultipartFile multipartFile,
                                           Model model) {
         try {
-            courseService.saveCourse(new CourseDTO(createCourseDTO.getName(), createCourseDTO.getDescription(), createCourseDTO.getPrice(), multipartFile, createCourseDTO.getMentorId()));
+            courseService.saveCourse(courseDTO, multipartFile);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
@@ -35,5 +31,4 @@ public class CourseController {
 
         return "admin-dashboard";
     }
-
 }

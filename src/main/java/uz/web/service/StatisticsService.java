@@ -9,8 +9,6 @@ public class StatisticsService {
     private MentorService mentorService;
     private CourseOfUsersService courseOfUsersService;
 
-
-
     public StatisticsDAO getStatistics(){
         StatisticsDAO statisticsDAO = new StatisticsDAO();
 

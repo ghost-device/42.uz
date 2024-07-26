@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public class MentorRepo extends BaseRepo<MentorEntity> {
+    public MentorRepo() {
+        super.aClass = MentorEntity.class;
+    }
 
     public List<MentorDAO> getAllMentors() {
         return entityManager.createQuery("select new uz.web.domain.DAO.MentorDAO(m.name,m.id, m.biography) FROM MentorEntity m"

@@ -44,6 +44,7 @@ public class RatingService extends BaseService<RatingEntity> {
                         .user(user)
                         .build());
                 course.setRatingEntities(ratings);
+                courseService.update(course);
                 break;
             }
         }

@@ -26,7 +26,8 @@ public class CloudService {
       public String uploadFile(MultipartFile file)  {
           String fileName = UserVerificationService.getUniqueCode();
 
-          BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
+          BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
+                  .setContentType(file.getContentType()).build();
 
           try {
               storage.create(blobInfo, file.getBytes());

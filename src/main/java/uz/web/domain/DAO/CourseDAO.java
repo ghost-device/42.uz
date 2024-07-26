@@ -14,6 +14,6 @@ public class CourseDAO {
     private String description;
     private String mentorName;
     private boolean isActive;
-    private Integer price;
+    private Double price;
     private String imageUrl;
 }

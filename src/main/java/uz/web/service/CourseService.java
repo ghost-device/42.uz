@@ -3,6 +3,7 @@ package uz.web.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.CourseDAO;
 import uz.web.domain.DTO.CourseDTO;
 import uz.web.domain.entity.CourseEntity;
@@ -57,18 +58,16 @@ public class CourseService extends BaseService<CourseEntity> {
     }
 
     @Transactional
-    public void saveCourse(CourseDTO courseDTO) {
-        this.save(
-                CourseEntity.builder()
-                        .name(courseDTO.getName())
-                        .description(courseDTO.getDescription())
-                        .price(courseDTO.getPrice().intValue())
-                        .imageId(
-                                cloudService.uploadFile(courseDTO.getImage())
-                        )
-                        .mentor(mentorService.findById(courseDTO.getMentorId()))
-                        .build()
-        );
+    public void saveCourse(CourseDTO courseDTO, MultipartFile file) {
+        CourseEntity courseEntity = CourseEntity.builder()
+                .name(courseDTO.getName())
+                .description(courseDTO.getDescription())
+                .price(courseDTO.getPrice())
+                .imageId(cloudService.uploadFile(file))
+                .mentor(mentorService.findById(courseDTO.getMentorId()))
+                .build();
+
+        save(courseEntity);
     }
 
     @Override

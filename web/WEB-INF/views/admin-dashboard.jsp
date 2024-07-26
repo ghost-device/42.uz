@@ -130,16 +130,16 @@
                         <input type="number" class="form-control" id="coursePrice" name="price" placeholder="Enter course price" step="0.01" required>
                     </div>
                     <div class="mb-3">
-                        <label for="courseImage" class="form-label">Course Image</label>
-                        <input type="file" class="form-control" id="courseImage" name="image" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="mentorSelect" class="form-label">Mentor</label>
                         <select class="form-select" id="mentorSelect" name="mentorId">
                             <c:forEach var="mentor" items="${mentors}">
                                 <option value="${mentor.id}">${mentor.name}</option>
                             </c:forEach>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="courseImage" class="form-label">Course Image</label>
+                        <input type="file" class="form-control" id="courseImage" name="img" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Create Course</button>
                 </form>
