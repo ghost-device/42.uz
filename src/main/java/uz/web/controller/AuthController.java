@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DTO.AuthDTO;
+import uz.web.service.CourseService;
+import uz.web.service.MentorService;
 import uz.web.service.UserService;
 
 @Controller
@@ -14,6 +16,8 @@ import uz.web.service.UserService;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+    private final MentorService mentorService;
+    private final CourseService courseService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute AuthDTO authDTO, Model model){
@@ -42,5 +46,17 @@ public class AuthController {
             model.addAttribute("errorMessage", e.getMessage());
             return "login";
         }
+    }
+
+    @RequestMapping(value = "/admin-login", method = RequestMethod.POST)
+    public String adminLogin(@ModelAttribute AuthDTO authDTO, Model model){
+        if (authDTO.getEmail().equals("admin") && authDTO.getPassword().equals("1")){
+            model.addAttribute("mentors", mentorService.getAllMentors());
+            model.addAttribute("courses", courseService.getAllCourse(false));
+            return "admin-dashboard";
+        }
+
+        model.addAttribute("errorMessage", "Username yoki parol xato!");
+        return "admin-login";
     }
 }

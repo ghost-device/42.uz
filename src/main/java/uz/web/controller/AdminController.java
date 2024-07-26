@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class AdminController {
     @RequestMapping(method = RequestMethod.GET)
-    public String throwToAdminLogin(){
+    public String throwToAdminLogin() {
         return "admin-login";
     }
-
-
 }

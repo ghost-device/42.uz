@@ -9,7 +9,6 @@ import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.repo.CourseRepo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -48,6 +47,7 @@ public class CourseService extends BaseService<CourseEntity> {
                     course.getName(),
                     course.getDescription(),
                     course.getMentor().getName(),
+                    course.isActive(),
                     course.getPrice(),
                     cloudService.getFileUrl(course.getImageId())
             ));
@@ -62,9 +62,9 @@ public class CourseService extends BaseService<CourseEntity> {
                 CourseEntity.builder()
                         .name(courseDTO.getName())
                         .description(courseDTO.getDescription())
-                        .price(courseDTO.getPrice())
+                        .price(courseDTO.getPrice().intValue())
                         .imageId(
-                                cloudService.uploadFile(courseDTO.getFaceImgOfCourse())
+                                cloudService.uploadFile(courseDTO.getImage())
                         )
                         .mentor(mentorService.findById(courseDTO.getMentorId()))
                         .build()

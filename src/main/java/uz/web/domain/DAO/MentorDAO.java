@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class MentorDAO {
-    private String mentorName;
-    private UUID mentorId;
+    private String name;
+    private UUID id;
     private String biography;
 }

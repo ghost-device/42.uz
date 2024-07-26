@@ -5,7 +5,6 @@ import uz.web.domain.DAO.StatisticsDAO;
 
 @Service
 public class StatisticsService {
-
     private CourseService courseService;
     private MentorService mentorService;
     private CourseOfUsersService courseOfUsersService;
@@ -21,8 +20,6 @@ public class StatisticsService {
 
         return statisticsDAO;
     }
-
-
 }
 
 
