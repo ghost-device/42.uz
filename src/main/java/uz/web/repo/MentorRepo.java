@@ -14,7 +14,7 @@ public class MentorRepo extends BaseRepo<MentorEntity> {
     }
 
     public List<MentorDAO> getAllMentors() {
-        return entityManager.createQuery("select new uz.web.domain.DAO.MentorDAO(m.name,m.id, m.biography) FROM MentorEntity m"
+        return entityManager.createQuery("select new uz.web.domain.DAO.MentorDAO(m.name,m.id, m.biography, m.pictureId) FROM MentorEntity m"
                 , MentorDAO.class).getResultList();
     }
 }

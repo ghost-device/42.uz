@@ -64,6 +64,7 @@ public class PaymentService extends BaseService<PaymentEntity> {
     }
 
     public List<PaymentEntity> allPayments() {
+
         return paymentRepo.getAll();
     }
 

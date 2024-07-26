@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Mentor Dashboard</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Include Bootstrap Icons CSS -->
@@ -71,34 +71,31 @@
                         <a class="nav-link" href="#"><i class="bi bi-cash-stack"></i> Payments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/mentor"><i class="bi bi-person-circle"></i> Mentors</a>
+                        <a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Mentors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+                        <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Log Out</a>
                     </li>
                 </ul>
             </div>
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
-            <div class="row mb-5">
-                <div class="col-md-12">
-                    <canvas id="statisticsChart"></canvas>
-                </div>
-            </div>
             <div class="row">
-                <c:forEach var="course" items="${courses}">
+                <c:forEach var="course" items="${mentors}">
                     <div class="col-md-4">
                         <div class="card shadow-sm">
-                            <img src="${course.image}" class="card-img-top" alt="${course.name}">
+                            <img src="${mentor.pictureUrl}" class="card-img-top" alt="${mentor.pictureUrl}">
                             <div class="card-body">
-                                <h5 class="card-title">${course.name}</h5>
-                                <p class="card-text"><i class="bi bi-tag"></i> Price: $${course.price}</p>
-                                <p class="card-text"><i class="bi bi-person"></i> Mentor: ${course.mentor}</p>
-                                <p class="card-text"><i class="bi bi-check-circle"></i> Active: <c:choose>
-                                    <c:when test="${course.isActive}">Yes</c:when>
-                                    <c:otherwise>No</c:otherwise>
-                                </c:choose></p>
+                                <h5 class="card-title">${mentor.name}</h5>
+                                <p class="card-text"><i class="bi bi-tag"></i> Biografiya: ${mentor.biography}</p>
+                                <p class="card-text"><i class="bi bi-check-circle"></i>
+                                    <a href="/mentor/courses?mentorid=${mentor.id}">Kurslar</a>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning">O'chirish</button>
+                                <button class="btn btn-primary">O'zgartirish</button>
                             </div>
                         </div>
                     </div>
@@ -107,7 +104,7 @@
 
             <!-- Course Creation Form -->
             <div class="form-container">
-                <h3>Create New Course</h3>
+                <h3>Yangi Mentor qo'shish</h3>
 
                 <!-- Error Message Alert -->
                 <c:if test="${not empty errorMessage}">
@@ -116,32 +113,20 @@
                     </div>
                 </c:if>
 
-                <form action="${pageContext.request.contextPath}/course/create" method="post" enctype="multipart/form-data">
+                <form action="${pageContext.request.contextPath}/mentor/add" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="courseName" class="form-label">Course Name</label>
-                        <input type="text" class="form-control" id="courseName" name="name" placeholder="Enter course name" required>
+                        <label for="courseName" class="form-label">Mentor Ismi</label>
+                        <input type="text" class="form-control" id="courseName" name="name" placeholder="Mentor ismi" required>
                     </div>
                     <div class="mb-3">
-                        <label for="courseDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="courseDescription" name="description" rows="3" placeholder="Enter course description" required></textarea>
+                        <label for="courseDescription" class="form-label">Biografiyasi</label>
+                        <textarea class="form-control" id="courseDescription" name="biography" rows="3" placeholder="Mentor biografiyasi" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="coursePrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="coursePrice" name="price" placeholder="Enter course price" step="0.01" required>
+                        <label for="courseImage" class="form-label">Mentor rasmi</label>
+                        <input type="file" class="form-control" id="courseImage" name="picture" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="mentorSelect" class="form-label">Mentor</label>
-                        <select class="form-select" id="mentorSelect" name="mentorId">
-                            <c:forEach var="mentor" items="${mentors}">
-                                <option value="${mentor.id}">${mentor.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseImage" class="form-label">Course Image</label>
-                        <input type="file" class="form-control" id="courseImage" name="img" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Course</button>
+                    <button type="submit" class="btn btn-primary">Mentor qo'shish</button>
                 </form>
             </div>
         </main>
