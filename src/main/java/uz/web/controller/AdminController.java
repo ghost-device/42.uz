@@ -11,4 +11,12 @@ public class AdminController {
     public String throwToAdminLogin() {
         return "admin-login";
     }
+
+
+    /*
+    TODO
+        mentor all
+        delete mentor (if course has, throw an exception)
+
+     */
 }

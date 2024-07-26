@@ -13,4 +13,5 @@ public class MentorDAO {
     private String name;
     private UUID id;
     private String biography;
+    private String pictureUrl;
 }

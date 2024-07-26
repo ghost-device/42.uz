@@ -2,8 +2,8 @@ package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.MentorDAO;
-import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.MentorEntity;
 import uz.web.repo.MentorRepo;
 
@@ -14,9 +14,20 @@ import java.util.UUID;
 @Service
 public class MentorService extends BaseService<MentorEntity> {
     private final MentorRepo mentorRepo;
+    private final CloudService cloudService;
 
     public List<MentorDAO> getAllMentors() {
-        return mentorRepo.getAllMentors();
+
+        List<MentorDAO> mentors = mentorRepo.getAllMentors();
+        for (MentorDAO mentor : mentors) {
+            mentor.setPictureUrl(cloudService.getFileUrl(mentor.getPictureUrl()));
+        }
+        return mentors;
+    }
+
+    public void saveMentor(MentorEntity mentor, MultipartFile file) {
+        mentor.setPictureId(cloudService.uploadFile(file));
+        this.save(mentor);
     }
 
     @Override
