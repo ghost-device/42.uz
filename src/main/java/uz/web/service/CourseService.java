@@ -23,8 +23,8 @@ public class CourseService extends BaseService<CourseEntity> {
     private final UserService userService;
     private final MentorService mentorService;
 
-    public List<CourseDAO> getAllCourse(boolean isActive) {
-        return getCourseDAOS(courseRepo.getAllCourse(isActive));
+    public List<CourseDAO> getAllCourse() {
+        return getCourseDAOS(courseRepo.getAllCourse());
     }
 
     public List<CourseDAO> getCoursesByMentorId(UUID mentorId) {
@@ -54,7 +54,6 @@ public class CourseService extends BaseService<CourseEntity> {
                     course.getName(),
                     course.getDescription(),
                     course.getMentor().getName(),
-                    course.isActive(),
                     course.getPrice(),
                     cloudService.getFileUrl(course.getImageId())
             ));
@@ -78,15 +77,12 @@ public class CourseService extends BaseService<CourseEntity> {
 
     @Transactional
     public void update(CourseUpdateDTO courseDTO, MultipartFile multipartFile){
-        CourseEntity course = CourseEntity.builder()
-                .name(courseDTO.getName())
-                .description(courseDTO.getDescription())
-                .mentor(mentorService.findById(courseDTO.getMentorId()))
-                .imageId(cloudService.uploadFile(multipartFile))
-                .price(courseDTO.getPrice())
-                .build();
+        CourseEntity course = this.findById(courseDTO.getId());
 
-        course.setId(courseDTO.getId());
+        course.setName(courseDTO.getName());
+        course.setDescription(courseDTO.getDescription());
+        course.setImageId(cloudService.uploadFile(multipartFile));
+        course.setMentor(mentorService.findById(courseDTO.getMentorId()));
 
         this.update(course);
     }

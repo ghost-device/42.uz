@@ -14,7 +14,7 @@ public class StatisticsService {
     public StatisticsDAO getStatistics(){
         StatisticsDAO statisticsDAO = new StatisticsDAO();
 
-        statisticsDAO.setCourses(courseService.getAllCourse(true).size());
+        statisticsDAO.setCourses(courseService.getAllCourse().size());
         statisticsDAO.setMentors(mentorService.getAllMentors().size());
         statisticsDAO.setUsersCourses(courseOfUsersService.getAllCoursesOfUsers().size());
 

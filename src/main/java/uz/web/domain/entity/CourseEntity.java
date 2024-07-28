@@ -18,7 +18,6 @@ public class CourseEntity extends BaseEntity {
     private String description;
     private Double price;
     private String imageId;
-    private boolean isActive;
 
     @JoinColumn(name = "mentor_id")
     @ManyToOne
@@ -33,6 +32,6 @@ public class CourseEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
     private List<CommentEntity> commentEntities;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "course")
     private List<CoursesOfUsersEntity> coursesOfUsersEntities;
 }
