@@ -17,36 +17,36 @@ public class UserVerificationService {
     private final JavaMailSender javaMailSender;
     private final CodeService codeService;
 
-    public void checkCode(String email, String code){
+    public void checkCode(String email, String code) {
         CodeEntity codeByEmail = codeService.getCodeByEmail(email);
 
-        if (!codeByEmail.getCode().equals(code)){
+        if (!codeByEmail.getCode().equals(code)) {
             throw new InvalidCodeException("This code is invalid!");
         }
 
-        if (codeByEmail.getExpiredAt().isBefore(LocalDateTime.now())){
+        if (codeByEmail.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new InvalidCodeException("This code is expired!");
         }
     }
 
-    public void sendCodeToEmail(String email){
-        String code = getUniqueCode();
+        public void sendCodeToEmail(String email) {
+            String code = getUniqueCode();
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(email);
-        mailMessage.setSubject("Your verification code");
-        mailMessage.setText(code);
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(email);
+            mailMessage.setSubject("Your verification code");
+            mailMessage.setText(code);
 
-        try {
-            userService.checkEmail(email);
+            try {
+                userService.checkEmail(email);
 
-            throw new EmailNotFoundException("Bu emaildan foydalanilgan yoki email topilmadi!");
-        } catch (Exception e){
-            javaMailSender.send(mailMessage);
+                throw new EmailNotFoundException("Bu emaildan foydalanilgan yoki email topilmadi!");
+            } catch (Exception e) {
+                javaMailSender.send(mailMessage);
 
-            codeService.save(new CodeEntity(email, code, LocalDateTime.now().plusMinutes(1)));
+                codeService.save(new CodeEntity(email, code, LocalDateTime.now().plusMinutes(1)));
+            }
         }
-    }
 
     public static String getUniqueCode() {
         StringBuilder sb = new StringBuilder();
@@ -58,4 +58,9 @@ public class UserVerificationService {
 
         return sb.toString();
     }
+
+
+
+
+
 }
