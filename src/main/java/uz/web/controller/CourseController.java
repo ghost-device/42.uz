@@ -32,7 +32,7 @@ public class CourseController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("courses", courseService.getAllCourse());
         model.addAttribute("mentors", mentorService.getAllMentors());
 
         return "admin-dashboard";
@@ -40,7 +40,7 @@ public class CourseController {
 
     @RequestMapping()
     public String throwToCoursesPageOfUser(Model model){
-        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("courses", courseService.getAllCourse());
         return "user-courses-page";
     }
 
@@ -59,7 +59,7 @@ public class CourseController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("courses", courseService.getAllCourse());
         model.addAttribute("mentors", mentorService.getAllMentors());
         return "admin-dashboard";
     }
@@ -74,10 +74,17 @@ public class CourseController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("courses", courseService.getAllCourse());
         model.addAttribute("mentors", mentorService.getAllMentors());
 
         return "admin-dashboard";
     }
 
+    @RequestMapping("/u-modules/{courseId}")
+    public String throwToCourseModules(@PathVariable("courseId") UUID courseId, Model model){
+        model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
+        model.addAttribute("course", courseService.findById(courseId));
+
+        return "";
+    }
 }

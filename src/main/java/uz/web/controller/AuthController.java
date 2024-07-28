@@ -1,5 +1,6 @@
 package uz.web.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,11 +38,10 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute AuthDTO authDTO, Model model){
+    public String login(@ModelAttribute AuthDTO authDTO, Model model, HttpSession session){
         try {
-            model.addAttribute("user", userService.login(authDTO));
-
-            return "user-main-menu";
+            session.setAttribute("user", userService.login(authDTO));
+            return "redirect:/user/main-menu";
         } catch (Exception e){
             model.addAttribute("errorMessage", e.getMessage());
             return "login";
@@ -52,7 +52,7 @@ public class AuthController {
     public String adminLogin(@ModelAttribute AuthDTO authDTO, Model model){
         if (authDTO.getEmail().equals("admin") && authDTO.getPassword().equals("1")){
             model.addAttribute("mentors", mentorService.getAllMentors());
-            model.addAttribute("courses", courseService.getAllCourse(false));
+            model.addAttribute("courses", courseService.getAllCourse());
             return "admin-dashboard";
         }
 

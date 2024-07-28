@@ -12,9 +12,9 @@ public class CourseRepo extends BaseRepo<CourseEntity> {
         super.aClass = CourseEntity.class;
     }
 
-    public List<CourseEntity> getAllCourse(boolean isActive) {
+    public List<CourseEntity> getAllCourse() {
         return entityManager
-                .createQuery("from CourseEntity c" + (isActive ? " where c.isActive" : ""), CourseEntity.class)
+                .createQuery("from CourseEntity c", CourseEntity.class)
                 .getResultList();
     }
 
