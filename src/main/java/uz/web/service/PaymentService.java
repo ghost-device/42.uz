@@ -64,9 +64,14 @@ public class PaymentService extends BaseService<PaymentEntity> {
     }
 
     public List<PaymentEntity> allPayments(PaymentStatus paymentStatus) {
-
         return paymentRepo.getAll(paymentStatus);
     }
+
+    public List<PaymentEntity> userPayments(PaymentHistoryDAO paymentHistoryDAO){
+        return paymentRepo.getAllPaymentsByUser(paymentHistoryDAO.getUserId());
+    }
+
+
 
     @Transactional
     public void acceptPayment(AcceptPaymentDTO acceptPayment) {
