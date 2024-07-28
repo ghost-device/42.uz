@@ -30,10 +30,6 @@ public class CommentService extends BaseService<CommentEntity>{
         courseService.update(course);
     }
 
-    public List<CommentEntity> getAllComments(Integer pageNumber, Integer pageSize){
-        return commentRepo.getAllComments(pageNumber, pageSize);
-    }
-
 
     @Override
     public void save(CommentEntity commentEntity) {

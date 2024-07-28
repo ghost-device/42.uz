@@ -1,6 +1,5 @@
 package uz.web.repo;
 
-import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import uz.web.domain.entity.CommentEntity;
 
@@ -20,19 +19,6 @@ public class CommentRepo extends BaseRepo<CommentEntity>{
                 .getResultList();
 
     }
-
-
-    public List<CommentEntity> getAllComments(Integer pageNumber, Integer pageSize){
-       return entityManager.createQuery("from CommentEntity", CommentEntity.class)
-                .setFirstResult((pageNumber - 1) * pageSize)
-                .setMaxResults(pageSize)
-                .getResultList();
-    }
-
-
-
-
-
 }
 
 
