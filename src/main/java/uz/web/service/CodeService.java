@@ -13,7 +13,7 @@ import java.util.UUID;
 public class CodeService extends BaseService<CodeEntity> {
     private final CodeRepo codeRepo;
 
-    public CodeEntity getCodeByEmail(String email){
+    public CodeEntity getCodeByEmail(String email) {
         return codeRepo.getCodeByEmail(email);
     }
 
@@ -26,7 +26,8 @@ public class CodeService extends BaseService<CodeEntity> {
             code.setExpiredAt(LocalDateTime.now().plusMinutes(1));
 
             this.update(code);
-        } catch (Exception e){
+
+        } catch (Exception e) {
             codeRepo.save(codeEntity);
         }
     }

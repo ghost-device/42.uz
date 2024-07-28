@@ -3,10 +3,13 @@ package uz.web.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.web.domain.DTO.UpdatePasswordDTO;
 import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.AuthDTO;
 import uz.web.domain.entity.UserEntity;
 import uz.web.domain.exceptions.AuthFailedException;
+import uz.web.domain.exceptions.EmailNotFoundException;
+import uz.web.domain.exceptions.InvalidCodeException;
 import uz.web.repo.UserRepo;
 
 import java.util.UUID;
@@ -15,6 +18,7 @@ import java.util.UUID;
 @Service
 public class UserService extends BaseService<UserEntity> {
     private final UserRepo userRepo;
+    private final UserVerificationService userVerificationService;
 
     @Transactional
     public void register(AuthDTO registerDTO) {
@@ -44,6 +48,22 @@ public class UserService extends BaseService<UserEntity> {
         throw new AuthFailedException("Password is incorrect!");
     }
 
+
+    public void changePassword(UpdatePasswordDTO updatePasswordDTO) {
+        UserEntity user = findById(updatePasswordDTO.getId());
+
+        if (user == null) {
+            throw new EmailNotFoundException("Email not found!");
+        }
+        if (!user.getPassword().equals(updatePasswordDTO.getOldPassword())) {
+            throw new InvalidCodeException("Old password is incorrect!");
+        }
+
+        user.setPassword(updatePasswordDTO.getNewPassword());
+        update(user);
+
+    }
+
     @Transactional
     public void setUserBalanceById(UUID id, Integer amount) {
         userRepo.setBalanceById(id, amount);
@@ -51,6 +71,11 @@ public class UserService extends BaseService<UserEntity> {
 
     public void checkEmail(String email) {
         userRepo.getUserByEmail(email);
+    }
+
+    public UserEntity getUserByEmail(String email) {
+        return userRepo.getUserByEmail(email);
+
     }
 
     @Override

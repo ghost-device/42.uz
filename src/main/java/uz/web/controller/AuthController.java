@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DTO.AuthDTO;
+import uz.web.domain.DTO.UpdatePasswordDTO;
 import uz.web.service.CourseService;
 import uz.web.service.MentorService;
 import uz.web.service.UserService;
@@ -21,19 +22,19 @@ public class AuthController {
     private final CourseService courseService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute AuthDTO authDTO, Model model){
+    public String register(@ModelAttribute AuthDTO authDTO, Model model) {
         try {
             userService.register(authDTO);
 
             return "login";
-        } catch (Exception e){
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "register";
         }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String throwToLoginMenu(){
+    public String throwToLoginMenu() {
         return "login";
     }
 
@@ -49,8 +50,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/admin-login", method = RequestMethod.POST)
-    public String adminLogin(@ModelAttribute AuthDTO authDTO, Model model){
-        if (authDTO.getEmail().equals("admin") && authDTO.getPassword().equals("1")){
+    public String adminLogin(@ModelAttribute AuthDTO authDTO, Model model) {
+        if (authDTO.getEmail().equals("admin") && authDTO.getPassword().equals("1")) {
             model.addAttribute("mentors", mentorService.getAllMentors());
             model.addAttribute("courses", courseService.getAllCourse());
             return "admin-dashboard";
@@ -59,4 +60,18 @@ public class AuthController {
         model.addAttribute("errorMessage", "Username yoki parol xato!");
         return "admin-login";
     }
+
+    @RequestMapping(value = "/change-password", method = RequestMethod.POST)
+    public String changePassword(@ModelAttribute UpdatePasswordDTO updatePasswordDTO, Model model) {
+        try {
+            userService.changePassword(updatePasswordDTO);
+            model.addAttribute("successMessage", "Password updated successfully!");
+            return "change-password";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "change-password";
+        }
+
+    }
+
 }
