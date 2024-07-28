@@ -32,7 +32,6 @@ public class LessonService extends BaseService<LessonEntity> {
         for (LessonEntity lesson : moduleService.findById(moduleId).getLessonEntities()) {
             list.add(new LessonForModuleDAO(lesson.getId(), lesson.getName(), lesson.getOrderNum(), lesson.getVideoDuration()));
         }
-
         return list;
     }
 

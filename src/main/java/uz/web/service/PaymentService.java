@@ -63,13 +63,13 @@ public class PaymentService extends BaseService<PaymentEntity> {
         return cloudService.getFileUrl(paymentCheckId);
     }
 
-    public List<PaymentEntity> allPayments() {
+    public List<PaymentEntity> allPayments(PaymentStatus paymentStatus) {
 
-        return paymentRepo.getAll();
+        return paymentRepo.getAll(paymentStatus);
     }
 
     @Transactional
-    public List<PaymentEntity> acceptPayment(AcceptPaymentDTO acceptPayment) {
+    public void acceptPayment(AcceptPaymentDTO acceptPayment) {
         if (userService.findById(acceptPayment.getBuyerId()) == null) {
             throw new UserNotFoundException("User not found");
         }
@@ -87,8 +87,20 @@ public class PaymentService extends BaseService<PaymentEntity> {
                 break;
             }
         }
-        return payments;
     }
+
+    @Transactional
+    public void canceledPayment(AcceptPaymentDTO acceptPaymentDTO){
+        List<PaymentEntity> paymentsByStatus = paymentRepo.getPaymentsByStatus(acceptPaymentDTO.getStatus());
+        for (PaymentEntity payments : paymentsByStatus) {
+            if(payments.getStatus().equals(PaymentStatus.PENDING)){
+                payments.setStatus(PaymentStatus.CANCELED);
+                this.update(payments);
+                break;
+            }
+        }
+    }
+
 
 
     @Override

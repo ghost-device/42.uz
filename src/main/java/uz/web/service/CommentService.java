@@ -7,6 +7,7 @@ import uz.web.domain.entity.CourseEntity;
 import uz.web.repo.CommentRepo;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
