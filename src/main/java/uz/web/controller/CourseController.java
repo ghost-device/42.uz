@@ -7,9 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DTO.CourseDTO;
-import uz.web.domain.entity.UserEntity;
+import uz.web.domain.DTO.CourseUpdateDTO;
 import uz.web.service.CourseService;
 import uz.web.service.MentorService;
+import uz.web.service.ModuleService;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/course")
@@ -17,13 +20,14 @@ import uz.web.service.MentorService;
 public class CourseController {
     private final CourseService courseService;
     private final MentorService mentorService;
+    private final ModuleService moduleService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String adminCoursesControl(@ModelAttribute CourseDTO courseDTO,
-                                          @RequestParam("img") MultipartFile multipartFile,
+                                      @RequestParam("img") MultipartFile multipartFile,
                                           Model model) {
         try {
-            courseService.saveCourse(courseDTO, multipartFile);
+            courseService.save(courseDTO, multipartFile);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
@@ -39,4 +43,41 @@ public class CourseController {
         model.addAttribute("courses", courseService.getAllCourse(false));
         return "user-courses-page";
     }
+
+    @RequestMapping("/modules/{courseId}")
+    public String adminModulesControl(@PathVariable("courseId") UUID courseId, Model model, HttpSession session) {
+        model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
+        session.setAttribute("courseId", courseId);
+        return "admin-modules-control";
+    }
+
+    @RequestMapping(value = "/delete/{courseId}")
+    public String deleteCourse(@PathVariable("courseId") UUID courseId, Model model){
+        try {
+            courseService.delete(courseId);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+
+        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("mentors", mentorService.getAllMentors());
+        return "admin-dashboard";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateCourse(@ModelAttribute CourseUpdateDTO courseDTO,
+                              @RequestParam("img") MultipartFile multipartFile,
+                                      Model model) {
+        try {
+            courseService.update(courseDTO, multipartFile);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+
+        model.addAttribute("courses", courseService.getAllCourse(false));
+        model.addAttribute("mentors", mentorService.getAllMentors());
+
+        return "admin-dashboard";
+    }
+
 }

@@ -1,10 +1,11 @@
 package uz.web.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.web.domain.DAO.ModuleDAO;
+import uz.web.domain.DTO.ModuleDTO;
 import uz.web.domain.entity.ModuleEntity;
-import uz.web.repo.CourseRepo;
 import uz.web.repo.ModuleRepo;
 
 import java.util.ArrayList;
@@ -25,6 +26,28 @@ public class ModuleService extends BaseService<ModuleEntity> {
         }
 
         return list;
+    }
+
+    @Transactional
+    public void saveModule(ModuleDTO moduleDTO){
+        int orderNum = moduleDTO.getOrderNum();
+
+        List<ModuleEntity> moduleEntities = courseService.findById(moduleDTO.getCourseId()).getModuleEntities();
+
+        for (ModuleEntity module : moduleEntities) {
+            if (module.getOrderNum() >= orderNum){
+                module.setOrderNum(module.getOrderNum() + 1);
+                this.update(module);
+            }
+        }
+
+        this.save(ModuleEntity.builder()
+                .name(moduleDTO.getName())
+                .course(courseService.findById(moduleDTO.getCourseId()))
+                .description(moduleDTO.getDescription())
+                .orderNum(moduleDTO.getOrderNum())
+                .build()
+        );
     }
 
     @Override

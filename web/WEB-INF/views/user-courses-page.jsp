@@ -75,7 +75,6 @@
           <p>${course.description}</p>
           <p><strong>Price:</strong> ${course.price}</p>
           <p><strong>Mentor:</strong> ${course.mentor}</p>
-          <button class="btn btn-primary">Enroll Now</button>
         </div>
       </div>
     </c:forEach>

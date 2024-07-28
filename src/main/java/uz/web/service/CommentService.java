@@ -16,7 +16,6 @@ public class CommentService extends BaseService<CommentEntity>{
     private final CommentRepo commentRepo;
     private final CourseService courseService;
 
-
     public void deleteComment(CommentEntity commentEntity){
         List<CommentEntity> byComment = commentRepo.findByComment(commentEntity.getId());
         CourseEntity course = courseService.findByCourseId(commentEntity.getCourse().getId());

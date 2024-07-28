@@ -24,7 +24,7 @@ public class CourseEntity extends BaseEntity {
     @ManyToOne
     private MentorEntity mentor;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "course")
     private List<ModuleEntity> moduleEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")

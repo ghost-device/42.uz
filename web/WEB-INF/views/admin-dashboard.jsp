@@ -12,12 +12,12 @@
     <style>
         body {
             background-color: white;
-            color: black; /* Set text color to black */
+            color: black;
             height: 100vh;
             display: flex;
             flex-direction: column;
             margin: 0;
-            position: relative; /* Make sure body has a position for absolute positioning of the alert */
+            position: relative;
         }
         .vertical-nav {
             width: 250px;
@@ -88,22 +88,82 @@
             </div>
             <div class="row">
                 <c:forEach var="course" items="${courses}">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
                             <img src="${course.imageUrl}" class="card-img-top" alt="${course.name}">
-                            <div class="card-body">
+                            <div class="card-body p-2">
                                 <h5 class="card-title">${course.name}</h5>
-                                <p class="card-text"><i class="bi bi-tag"></i> Price: $${course.price}</p>
-                                <p class="card-text"><i class="bi bi-person"></i> Mentor: ${course.mentor}</p>
-<%--                                <p class="card-text"><i class="bi bi-check-circle"></i> Active: <c:choose>--%>
-<%--                                    <c:when test="${course.isActive}">Yes</c:when>--%>
-<%--                                    <c:otherwise>No</c:otherwise>--%>
-<%--                                </c:choose></p>--%>
+                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Price: $${course.price}</p>
+                                <p class="card-text mb-1"><i class="bi bi-person"></i> Mentor: ${course.mentor}</p>
+                            </div>
+                            <div class="card-footer p-2">
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${course.id}">O'chirish</button>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${course.id}">O'zgartirish</button>
+                                <a href="${pageContext.request.contextPath}/course/modules/${course.id}" class="btn btn-secondary btn-sm">Get Modules</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="deleteModal-${course.id}" tabindex="-1" aria-labelledby="deleteModalLabel-${course.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-${course.id}">Delete Course</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete the course "${course.name}"?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="/course/delete/${course.id}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Modal -->
+                    <div class="modal fade" id="updateModal-${course.id}" tabindex="-1" aria-labelledby="updateModalLabel-${course.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel-${course.id}">Update Course</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="${pageContext.request.contextPath}/course/update" method="post" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="courseName-${course.id}" class="form-label">Course Name</label>
+                                                <input type="text" class="form-control" name="name" id="courseName-${course.id}" value="${course.name}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="coursePrice-${course.id}" class="form-label">Price</label>
+                                                <input type="text" class="form-control" name="price" id="coursePrice-${course.id}" value="${course.price}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="file" class="form-control" name="img" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="courseMentor-${course.id}" class="form-label">Mentor</label>
+                                                <select name="mentorId" required>
+                                                    <c:forEach var="mentor" items="${mentors}">
+                                                        <option value="${mentor.id}">${mentor.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="id" value="${course.id}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
             </div>
+
 
             <!-- Course Creation Form -->
             <div class="form-container">

@@ -55,6 +55,7 @@ public class LessonService extends BaseService<LessonEntity> {
         for (LessonEntity lesson : lessonEntities) {
             if (lesson.getOrderNum() >= orderNum){
                 lesson.setOrderNum(lesson.getOrderNum() + 1);
+                this.update(lesson);
             }
         }
 

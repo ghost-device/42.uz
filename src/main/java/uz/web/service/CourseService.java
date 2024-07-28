@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.CourseDAO;
 import uz.web.domain.DTO.CourseDTO;
+import uz.web.domain.DTO.CourseUpdateDTO;
 import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
 import uz.web.repo.CourseRepo;
@@ -49,6 +50,7 @@ public class CourseService extends BaseService<CourseEntity> {
 
         for (CourseEntity course : courseEntities) {
             list.add(new CourseDAO(
+                    course.getId(),
                     course.getName(),
                     course.getDescription(),
                     course.getMentor().getName(),
@@ -62,7 +64,7 @@ public class CourseService extends BaseService<CourseEntity> {
     }
 
     @Transactional
-    public void saveCourse(CourseDTO courseDTO, MultipartFile file) {
+    public void save(CourseDTO courseDTO, MultipartFile file) {
         CourseEntity courseEntity = CourseEntity.builder()
                 .name(courseDTO.getName())
                 .description(courseDTO.getDescription())
@@ -74,6 +76,21 @@ public class CourseService extends BaseService<CourseEntity> {
         save(courseEntity);
     }
 
+    @Transactional
+    public void update(CourseUpdateDTO courseDTO, MultipartFile multipartFile){
+        CourseEntity course = CourseEntity.builder()
+                .name(courseDTO.getName())
+                .description(courseDTO.getDescription())
+                .mentor(mentorService.findById(courseDTO.getMentorId()))
+                .imageId(cloudService.uploadFile(multipartFile))
+                .price(courseDTO.getPrice())
+                .build();
+
+        course.setId(courseDTO.getId());
+
+        this.update(course);
+    }
+
     @Override
     public void save(CourseEntity courseEntity) {
         courseRepo.save(courseEntity);
@@ -81,16 +98,16 @@ public class CourseService extends BaseService<CourseEntity> {
 
     @Override
     public CourseEntity findById(UUID id) {
-        return null;
+        return courseRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
-
+        courseRepo.delete(id);
     }
 
     @Override
     public void update(CourseEntity courseEntity) {
-
+        courseRepo.update(courseEntity);
     }
 }

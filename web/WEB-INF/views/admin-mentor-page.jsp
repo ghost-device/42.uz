@@ -83,24 +83,26 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
             <div class="row">
                 <c:forEach var="mentor" items="${mentors}">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <img src="${mentor.pictureUrl}" class="card-img-top" alt="${mentor.pictureUrl}">
-                            <div class="card-body">
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <img src="${mentor.pictureUrl}" class="card-img-top w-50 mt-3 mx-auto" alt="${mentor.pictureUrl}">
+                            <div class="card-body p-2">
                                 <h5 class="card-title">${mentor.name}</h5>
-                                <p class="card-text"><i class="bi bi-tag"></i> Biografiya: ${mentor.biography}</p>
-                                <p class="card-text"><i class="bi bi-check-circle"></i>
-                                    <a href="/mentor/courses?mentorid=${mentor.id}">Kurslar</a>
+                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Biografiya: ${mentor.biography}</p>
+                                <p class="card-text mb-1"><i class="bi bi-check-circle"></i>
+                                    <a href="/mentor/courses?mentorId=${mentor.id}">Kurslar</a>
                                 </p>
                             </div>
-                            <div class="card-footer">
-                                <button class="btn btn-warning">O'chirish</button>
-                                <button class="btn btn-primary">O'zgartirish</button>
+                            <div class="card-footer p-2">
+                                <button class="btn btn-warning btn-sm">O'chirish</button>
+                                <button class="btn btn-primary btn-sm">O'zgartirish</button>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
             </div>
+
+
 
             <!-- Course Creation Form -->
             <div class="form-container">

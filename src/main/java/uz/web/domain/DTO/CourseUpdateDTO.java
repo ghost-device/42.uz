@@ -1,4 +1,4 @@
-package uz.web.domain.DAO;
+package uz.web.domain.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +11,10 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseDAO {
+public class CourseUpdateDTO {
     private UUID id;
     private String name;
     private String description;
-    private String mentor;
-    private boolean isActive;
     private Double price;
-    private String imageUrl;
+    private UUID mentorId;
 }
