@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.web.domain.DAO.ModuleDAO;
 import uz.web.domain.DTO.ModuleDTO;
+import uz.web.domain.DTO.ModuleUpdateDTO;
+import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.ModuleEntity;
 import uz.web.repo.ModuleRepo;
 
@@ -18,7 +20,7 @@ public class ModuleService extends BaseService<ModuleEntity> {
     private final CourseService courseService;
     private final ModuleRepo moduleRepo;
 
-    public List<ModuleDAO> getModulesOfCourse(UUID courseId){
+    public List<ModuleDAO> getModulesOfCourse(UUID courseId) {
         List<ModuleDAO> list = new ArrayList<>();
 
         for (ModuleEntity module : courseService.findById(courseId).getModuleEntities()) {
@@ -29,13 +31,13 @@ public class ModuleService extends BaseService<ModuleEntity> {
     }
 
     @Transactional
-    public void saveModule(ModuleDTO moduleDTO){
+    public void saveModule(ModuleDTO moduleDTO) {
         int orderNum = moduleDTO.getOrderNum();
 
         List<ModuleEntity> moduleEntities = courseService.findById(moduleDTO.getCourseId()).getModuleEntities();
 
         for (ModuleEntity module : moduleEntities) {
-            if (module.getOrderNum() >= orderNum){
+            if (module.getOrderNum() >= orderNum) {
                 module.setOrderNum(module.getOrderNum() + 1);
                 this.update(module);
             }
@@ -68,5 +70,35 @@ public class ModuleService extends BaseService<ModuleEntity> {
     @Override
     public void update(ModuleEntity moduleEntity) {
         moduleRepo.update(moduleEntity);
+    }
+
+    @Transactional
+    public void deleteModule(UUID moduleId) {
+        ModuleEntity module = moduleRepo.findById(moduleId);
+
+        CourseEntity course = module.getCourse();
+
+        List<ModuleEntity> modules = course.getModuleEntities();
+
+        modules.remove(module);
+        for (ModuleEntity moduleEntity : modules) {
+            if (moduleEntity.getOrderNum() > module.getOrderNum()) {
+                moduleEntity.setOrderNum(moduleEntity.getOrderNum() - 1);
+            }
+        }
+        course.setModuleEntities(modules);
+        courseService.update(course);
+        moduleRepo.delete(moduleId);
+    }
+
+    @Transactional
+    public void update(ModuleUpdateDTO moduleUpdate) {
+        ModuleEntity module = ModuleEntity.builder()
+                .name(moduleUpdate.getName())
+                .description(moduleUpdate.getDescription())
+                .orderNum(moduleUpdate.getOrderNum())
+                .build();
+        module.setId(moduleUpdate.getId());
+        update(module);
     }
 }

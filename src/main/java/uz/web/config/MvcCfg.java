@@ -30,7 +30,7 @@ public class MvcCfg implements WebMvcConfigurer {
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         return new MultipartConfigElement(
-                "/temp",  // Temporary directory
+                "D:\\PDP\\Bootcamp\\Java\\JavaBackend(Jamshid aka)\\42.uz\\web\\pictures",  // Temporary directory
                 20971520, // Max file size (20 MB)
                 41943040, // Max request size (40 MB)
                 0         // File size threshold

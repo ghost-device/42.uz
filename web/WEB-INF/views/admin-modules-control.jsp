@@ -127,8 +127,8 @@
                                         <h5 class="modal-title" id="updateModalLabel-${module.id}">Update Module</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form>
+                                    <form action="${pageContext.request.contextPath}/module/update" method="post" enctype="multipart/form-data">
+                                        <div class="modal-body">
                                             <div class="mb-3">
                                                 <label for="moduleName-${module.id}" class="form-label">Module Name</label>
                                                 <input type="text" class="form-control" id="moduleName-${module.id}" value="${module.name}">
@@ -140,13 +140,14 @@
                                             <div class="mb-3">
                                                 <label for="moduleOrderNum-${module.id}" class="form-label">Order Number</label>
                                                 <input type="number" class="form-control" id="moduleOrderNum-${module.id}" value="${module.orderNum}">
+                                                <input type="hidden" name="id" value="${module.id}">
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-primary">Save Changes</button>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

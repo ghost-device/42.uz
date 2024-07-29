@@ -78,7 +78,7 @@
         <button class="btn btn-primary mt-4">⚡️Boshlash</button>
     </div>
     <div class="image-content">
-        <img src="https://storage.googleapis.com/videos42/hey.svg" class="img-fluid" alt="Placeholder Image">
+        <img src="${pageContext.request.contextPath}/pictures/hey.svg" class="img-fluid" alt="Placeholder Image">
     </div>
 </div>
 

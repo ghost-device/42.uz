@@ -3,9 +3,11 @@ package uz.web.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.CourseDAO;
 import uz.web.domain.DAO.LessonForModuleDAO;
 import uz.web.domain.DAO.LessonWithVideoDAO;
+import uz.web.domain.DTO.AddLessonDTO;
 import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.CourseEntity;
 import uz.web.domain.entity.CoursesOfUsersEntity;
@@ -86,5 +88,16 @@ public class LessonService extends BaseService<LessonEntity> {
     @Override
     public void update(LessonEntity lessonEntity) {
         lessonRepo.update(lessonEntity);
+    }
+
+    @Transactional
+    public void save(AddLessonDTO addLessonDTO, MultipartFile file) {
+        LessonEntity.builder()
+                .name(addLessonDTO.getLessonName())
+                .module(moduleService.findById(addLessonDTO.getModuleId()))
+                .orderNum(addLessonDTO.getOrderNum())
+                .videoDuration(addLessonDTO.getVideoDuration())
+                .videoId(cloudService.uploadFile(file))
+                .build();
     }
 }

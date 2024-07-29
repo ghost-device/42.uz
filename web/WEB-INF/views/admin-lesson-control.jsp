@@ -168,7 +168,7 @@
                         </div>
                     </c:if>
 
-                    <form action="${pageContext.request.contextPath}/lesson/create" method="post" enctype="multipart/form-data">
+                    <form action="${pageContext.request.contextPath}/lesson/add" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="lessonName" class="form-label">Lesson Name</label>
                             <input type="text" class="form-control" id="lessonName" name="name" placeholder="Enter lesson name" required>

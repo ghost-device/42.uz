@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class UserService extends BaseService<UserEntity> {
     private final UserRepo userRepo;
-    private final UserVerificationService userVerificationService;
+    //private final UserVerificationService userVerificationService;
 
     @Transactional
     public void register(AuthDTO registerDTO) {

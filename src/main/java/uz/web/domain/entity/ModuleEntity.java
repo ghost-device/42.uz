@@ -23,6 +23,6 @@ public class ModuleEntity extends BaseEntity {
 
     private int orderNum;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "module")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "module")
     private List<LessonEntity> lessonEntities;
 }
