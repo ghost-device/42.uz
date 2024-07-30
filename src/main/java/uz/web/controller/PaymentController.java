@@ -22,9 +22,10 @@ public class PaymentController {
 
     @RequestMapping
     public String paymentPage(Model model) {
+        model.addAttribute("pendingPayments", paymentService.allPayments(PaymentStatus.PENDING));
+        model.addAttribute("otherPayments", paymentService.allPayments());
 
-        model.addAttribute("payments", paymentService.allPayments(PaymentStatus.PENDING));
-        return "admin-payments";
+        return "admin-payment-control";
     }
 
     @RequestMapping(value = "/fillbalance", method = RequestMethod.POST)
@@ -39,16 +40,17 @@ public class PaymentController {
     }
 
 
-    @RequestMapping(value = "/accept-payment", method = RequestMethod.POST)
+    @RequestMapping(value = "/approve/{paymentId}", method = RequestMethod.POST)
     public String acceptPayment(AcceptPaymentDTO acceptPaymentDTO, Model model){
         try {
             paymentService.acceptPayment(acceptPaymentDTO);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        List<PaymentEntity> payments = paymentService.allPayments(acceptPaymentDTO.getStatus());
-        model.addAttribute("payments", payments);
-        return "admin-payments";
+        model.addAttribute("pendingPayments", paymentService.allPayments(PaymentStatus.PENDING));
+        model.addAttribute("otherPayments", paymentService.allPayments());
+
+        return "admin-payment-control";
     }
 
 

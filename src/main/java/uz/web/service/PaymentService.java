@@ -3,6 +3,7 @@ package uz.web.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.web.domain.DAO.AllPaymentsDAO;
 import uz.web.domain.DAO.PaymentHistoryDAO;
 import uz.web.domain.DTO.AcceptPaymentDTO;
 import uz.web.domain.DTO.PaymentDTO;
@@ -63,14 +64,32 @@ public class PaymentService extends BaseService<PaymentEntity> {
         return cloudService.getFileUrl(paymentCheckId);
     }
 
-    public List<PaymentEntity> allPayments(PaymentStatus paymentStatus) {
-        return paymentRepo.getAll(paymentStatus);
+    public List<AllPaymentsDAO> allPayments(PaymentStatus paymentStatus) {
+        List<PaymentEntity> all = paymentRepo.getAll(paymentStatus);
+        return getAllPaymentsDAOS(all);
     }
 
-    public List<PaymentEntity> userPayments(PaymentHistoryDAO paymentHistoryDAO){
+    public List<AllPaymentsDAO> allPayments() {
+        List<PaymentEntity> all = paymentRepo.getAll();
+        return getAllPaymentsDAOS(all);
+    }
+
+    private static List<AllPaymentsDAO> getAllPaymentsDAOS(List<PaymentEntity> all) {
+        List<AllPaymentsDAO> allPayments = new ArrayList<>();
+        for (PaymentEntity payment : all) {
+
+            allPayments.add(new AllPaymentsDAO(
+                    payment.getId(), payment.getPaymentCheckId(),
+                    payment.getAmount().doubleValue(), payment.getUser().getEmail(),
+                    payment.getCreatedAt(), payment.getStatus()
+            ));
+        }
+        return allPayments;
+    }
+
+    public List<PaymentEntity> userPayments(PaymentHistoryDAO paymentHistoryDAO) {
         return paymentRepo.getAllPaymentsByUser(paymentHistoryDAO.getUserId());
     }
-
 
 
     @Transactional
@@ -95,10 +114,10 @@ public class PaymentService extends BaseService<PaymentEntity> {
     }
 
     @Transactional
-    public void canceledPayment(AcceptPaymentDTO acceptPaymentDTO){
+    public void canceledPayment(AcceptPaymentDTO acceptPaymentDTO) {
         List<PaymentEntity> paymentsByStatus = paymentRepo.getPaymentsByStatus(acceptPaymentDTO.getStatus());
         for (PaymentEntity payments : paymentsByStatus) {
-            if(payments.getStatus().equals(PaymentStatus.PENDING)){
+            if (payments.getStatus().equals(PaymentStatus.PENDING)) {
                 payments.setStatus(PaymentStatus.CANCELED);
                 this.update(payments);
                 break;

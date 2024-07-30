@@ -18,6 +18,10 @@ public class PaymentRepo extends BaseRepo<PaymentEntity> {
         return entityManager.createQuery("from PaymentEntity where status = :paymentStatus", PaymentEntity.class).getResultList();
     }
 
+    public List<PaymentEntity> getAll() {
+        return entityManager.createQuery("from PaymentEntity where status != 'PENDING'", PaymentEntity.class).getResultList();
+    }
+
     public List<PaymentEntity> getAllPaymentsByUser(UUID userId){
         return entityManager.createQuery("from PaymentEntity p where p.user.id = :userId", PaymentEntity.class)
                 .setParameter("userId", userId)
