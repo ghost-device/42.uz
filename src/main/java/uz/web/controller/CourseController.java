@@ -47,7 +47,7 @@ public class CourseController {
     @RequestMapping("/modules/{courseId}")
     public String adminModulesControl(@PathVariable("courseId") UUID courseId, Model model, HttpSession session) {
         model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
-        session.setAttribute("courseId", courseId);
+        model.addAttribute("courseId", courseId);
         return "admin-modules-control";
     }
 

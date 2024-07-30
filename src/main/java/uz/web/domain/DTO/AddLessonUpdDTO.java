@@ -9,10 +9,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AddLessonDTO {
-    private UUID moduleId;
-    private String lessonName;
-    private Integer orderNum;
+public class AddLessonUpdDTO {
+    private UUID id; // moduleId or lessonId
+    private String name;
     private String lessonDescription;
-    private Integer videoDuration;
+    private int orderNum;
+    private int videoDuration;
 }

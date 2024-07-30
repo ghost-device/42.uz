@@ -81,9 +81,10 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Order</th>
-                        <th scope="col">Video Duration</th>
+                        <th scope="col">Nomi</th>
+                        <th scope="col">Dars ma'lumotlari</th>
+                        <th scope="col">Video uzunligi</th>
+                        <th scope="col">Tartib raqami</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -91,11 +92,12 @@
                     <c:forEach var="lesson" items="${lessons}">
                         <tr>
                             <td>${lesson.name}</td>
-                            <td>${lesson.orderNum}</td>
+                            <td>${lesson.description}</td>
                             <td>${lesson.videoDuration}</td>
+                            <td>${lesson.orderNum}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${lesson.id}">Delete</button>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${lesson.id}">Update</button>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${lesson.id}">O'chirish</button>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${lesson.id}">Ma'lumotlarni yangilash</button>
                             </td>
                         </tr>
 
@@ -104,15 +106,15 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel-${lesson.id}">Delete Lesson</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel-${lesson.id}">Darsni o'chirish</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete the lesson "${lesson.name}"?
+                                        Haqiqatdan ham ushbu "${lesson.name}" darsni o'chirmoqchimisiz?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <a href="/lesson/delete/${lesson.id}" class="btn btn-danger">O'chirish</a>
                                     </div>
                                 </div>
                             </div>
@@ -123,44 +125,49 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel-${lesson.id}">Update Lesson</h5>
+                                        <h5 class="modal-title" id="updateModalLabel-${lesson.id}">Ma'lumotlarni yangilash</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form action="${pageContext.request.contextPath}/lesson/update" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="id" value="${lesson.id}">
                                             <div class="mb-3">
-                                                <label for="lessonName-${lesson.id}" class="form-label">Lesson Name</label>
+                                                <label for="lessonName-${lesson.id}" class="form-label">Dars nomi</label>
                                                 <input type="text" class="form-control" id="lessonName-${lesson.id}" name="name" value="${lesson.name}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="lessonOrderNum-${lesson.id}" class="form-label">Order Number</label>
-                                                <input type="number" class="form-control" id="lessonOrderNum-${lesson.id}" name="orderNum" value="${lesson.orderNum}">
+                                                <label for="lessonDescription-${lesson.id}" class="form-label">Dars ma'lumotlari</label>
+                                                <textarea class="form-control" id="lessonDescription-${lesson.id}" name="lessonDescription" placeholder="Modul ma'lumotlarini kiriting" required>${lesson.description}</textarea>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="lessonVideoDuration-${lesson.id}" class="form-label">Video Duration</label>
+                                                <label for="lessonVideoDuration-${lesson.id}" class="form-label">Video uzunligi</label>
                                                 <input type="text" class="form-control" id="lessonVideoDuration-${lesson.id}" name="videoDuration" value="${lesson.videoDuration}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="lessonVideoFile-${lesson.id}" class="form-label">Choose Video File</label>
+                                                <label for="lessonOrderNum-${lesson.id}" class="form-label">Tartib raqami</label>
+                                                <input type="number" class="form-control" id="lessonOrderNum-${lesson.id}" name="orderNum" value="${lesson.orderNum}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="lessonVideoFile-${lesson.id}" class="form-label">Video fayl</label>
                                                 <input type="file" class="form-control" id="lessonVideoFile-${lesson.id}" name="videoFile">
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                <button type="submit" class="btn btn-primary">O'zgarishlarni saqlash</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </c:forEach>
                     </tbody>
                 </table>
 
                 <!-- Lesson Creation Form -->
                 <div class="form-container">
-                    <h3>Create New Lesson</h3>
+                    <h3>Yangi dars qo'shish</h3>
 
                     <c:if test="${not empty errorMessage}">
                         <div id="alertMessage" class="alert alert-danger alert-bottom-right" role="alert">
@@ -170,23 +177,27 @@
 
                     <form action="${pageContext.request.contextPath}/lesson/add" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="lessonName" class="form-label">Lesson Name</label>
-                            <input type="text" class="form-control" id="lessonName" name="name" placeholder="Enter lesson name" required>
+                            <label for="lessonName" class="form-label">Dars nomi</label>
+                            <input type="text" class="form-control" id="lessonName" name="name" placeholder="Dars nomini kiriting" required>
                         </div>
                         <div class="mb-3">
-                            <label for="lessonOrderNum" class="form-label">Order Number</label>
-                            <input type="number" class="form-control" id="lessonOrderNum" name="orderNum" placeholder="Enter order number" required>
+                            <label for="lessonOrderNum" class="form-label">Tartib raqam</label>
+                            <input type="number" class="form-control" id="lessonOrderNum" name="orderNum" placeholder="Tartib raqamni kiriting" required>
                         </div>
                         <div class="mb-3">
-                            <label for="lessonVideoDuration" class="form-label">Video Duration</label>
-                            <input type="text" class="form-control" id="lessonVideoDuration" name="videoDuration" placeholder="Enter video duration" required>
+                            <label for="lessonVideoDuration" class="form-label">Video uzunligi</label>
+                            <input type="number" class="form-control" id="lessonVideoDuration" name="videoDuration" placeholder="Video uzunligini kiriting (sekundlarda)" required>
                         </div>
                         <div class="mb-3">
-                            <label for="lessonVideoFile" class="form-label">Choose Video File</label>
+                            <label for="lessonDescription" class="form-label">Dars ma'lumotlari</label>
+                            <textarea class="form-control" id="lessonDescription" name="lessonDescription" rows="3" placeholder="Dars ma'lumotlarini kiriting" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lessonVideoFile" class="form-label">Video fayl yuklash</label>
                             <input type="file" class="form-control" id="lessonVideoFile" name="videoFile" required>
                         </div>
-                        <input type="hidden" name="moduleId" value="${sessionScope.get('moduleId')}">
-                        <button type="submit" class="btn btn-primary">Create Lesson</button>
+                        <input type="hidden" name="id" value="${moduleId}">
+                        <button type="submit" class="btn btn-primary">Darslikni qo'shish</button>
                     </form>
                 </div>
             </div>
@@ -194,8 +205,8 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlA3VDL3Zs9SJQ/rJ8pc9iQe6LrN9EU16ekzDJEp0hUatwO9iEIRL+Vazm2" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-c/VkaA1mcM+92eXvsUubvnnOf5pEUddA2i3V7ZRnDNfWqfXb6MJX1g9FvF0xN6l9" crossorigin="anonymous"></script>
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
     setTimeout(function() {
         var alertMessage = document.getElementById('alertMessage');

@@ -77,7 +77,7 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
             <div class="row">
                 <!-- Module Table -->
-                <h3 class="mb-4">Modules</h3>
+                <h3 class="mb-4">Modullar</h3>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -96,7 +96,7 @@
                             <td>
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${module.id}">O'chirish</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${module.id}">O'zgartirish</button>
-                                <a href="/module/lessons?moduleId=${module.id}" class="btn btn-secondary btn-sm">Get Lessons</a>
+                                <a href="${pageContext.request.contextPath}/module/lessons?moduleId=${module.id}" class="btn btn-secondary btn-sm">Modul darslari</a>
                             </td>
                         </tr>
 
@@ -105,15 +105,15 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel-${module.id}">Delete Module</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel-${module.id}">Modulni o'chirish</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete the module "${module.name}"?
+                                        Haqiqatdan ham ushbu "${module.name}" modulni o'chirmoqchimisiz?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <a href="${pageContext.request.contextPath}/module/delete/${module.id}" class="btn btn-danger">O'chirish</a>
                                     </div>
                                 </div>
                             </div>
@@ -124,28 +124,28 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel-${module.id}">Update Module</h5>
+                                        <h5 class="modal-title" id="updateModalLabel-${module.id}">Modulni o'zgartirish</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="${pageContext.request.contextPath}/module/update" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="moduleName-${module.id}" class="form-label">Module Name</label>
-                                                <input type="text" class="form-control" id="moduleName-${module.id}" value="${module.name}">
+                                                <label for="moduleName-${module.id}" class="form-label">Modul nomi</label>
+                                                <input type="text" class="form-control" name="name" id="moduleName-${module.id}" value="${module.name}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="moduleDescription-${module.id}" class="form-label">Description</label>
-                                                <textarea class="form-control" id="moduleDescription-${module.id}" rows="3">${module.description}</textarea>
+                                                <label for="moduleDescription-${module.id}" class="form-label">Modul ma'lumotlari</label>
+                                                <textarea class="form-control" name="description" id="moduleDescription-${module.id}" rows="3">${module.description}</textarea>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="moduleOrderNum-${module.id}" class="form-label">Order Number</label>
-                                                <input type="number" class="form-control" id="moduleOrderNum-${module.id}" value="${module.orderNum}">
+                                                <label for="moduleOrderNum-${module.id}" class="form-label">Modul tartib raqami</label>
+                                                <input type="number" class="form-control" name="orderNum" min="1" id="moduleOrderNum-${module.id}" value="${module.orderNum}">
                                                 <input type="hidden" name="id" value="${module.id}">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                            <button type="submit" class="btn btn-primary">O'zgarishlarni yangilash</button>
                                         </div>
                                     </form>
                                 </div>
@@ -157,7 +157,7 @@
 
                 <!-- Module Creation Form -->
                 <div class="form-container">
-                    <h3>Create New Module</h3>
+                    <h3>Yangi modul qo'shish</h3>
 
                     <c:if test="${not empty errorMessage}">
                         <div id="alertMessage" class="alert alert-danger alert-bottom-right" role="alert">
@@ -167,19 +167,19 @@
 
                     <form action="${pageContext.request.contextPath}/module/create" method="post">
                         <div class="mb-3">
-                            <label for="moduleName" class="form-label">Module Name</label>
-                            <input type="text" class="form-control" id="moduleName" name="name" placeholder="Enter module name" required>
+                            <label for="moduleName" class="form-label">Modul nomi</label>
+                            <input type="text" class="form-control" id="moduleName" name="name" placeholder="Modul nomini kiriting" required>
                         </div>
                         <div class="mb-3">
-                            <label for="moduleDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="moduleDescription" name="description" rows="3" placeholder="Enter module description" required></textarea>
+                            <label for="moduleDescription" class="form-label">Modul ma'lumotlari</label>
+                            <textarea class="form-control" id="moduleDescription" name="description" rows="3" placeholder="Modul ma'lumotlarini kiriting" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="moduleOrderNum" class="form-label">Order Number</label>
-                            <input type="number" class="form-control" id="moduleOrderNum" name="orderNum" placeholder="Enter order number" required>
+                            <label for="moduleOrderNum" class="form-label">Modul tartib raqami</label>
+                            <input type="number" class="form-control" id="moduleOrderNum" name="orderNum" placeholder="Modul tartib raqamini kititing" required>
                         </div>
-                        <input type="hidden" name="courseId" value="${sessionScope.get('courseId')}">
-                        <button type="submit" class="btn btn-primary">Create Module</button>
+                        <input type="hidden" name="courseId" value="${courseId}">
+                        <button type="submit" class="btn btn-primary">Modul qo'shish</button>
                     </form>
                 </div>
             </div>

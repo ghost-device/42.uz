@@ -81,24 +81,74 @@
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
+
             <div class="row">
                 <c:forEach var="mentor" items="${mentors}">
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm h-100">
-                            <img src="${mentor.pictureUrl}" class="card-img-top w-50 mt-3 mx-auto" alt="${mentor.pictureUrl}">
+                            <img src="${mentor.pictureUrl}" class="card-img-top" alt="${mentor.name}">
                             <div class="card-body p-2">
                                 <h5 class="card-title">${mentor.name}</h5>
-                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Biografiya: ${mentor.biography}</p>
-                                <p class="card-text mb-1"><i class="bi bi-check-circle"></i>
-                                    <a href="/mentor/courses?mentorId=${mentor.id}">Kurslar</a>
-                                </p>
+                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Biografiyasi: ${mentor.biography}</p>
                             </div>
                             <div class="card-footer p-2">
-                                <button class="btn btn-warning btn-sm">O'chirish</button>
-                                <button class="btn btn-primary btn-sm">O'zgartirish</button>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${mentor.id}">O'chirish</button>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${mentor.id}">O'zgartirish</button>
+                                <a href="${pageContext.request.contextPath}/mentor/courses/${mentor.id}" class="btn btn-secondary btn-sm">Mentor kurslari</a>
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="deleteModal-${mentor.id}" tabindex="-1" aria-labelledby="deleteModalLabel-${mentor.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-${mentor.id}">Mentorni o'chirish</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Haqiqatan ham ushbu "${mentor.name}" mentorni oʻchirib tashlamoqchimisiz?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                    <a href="/mentor/delete/${mentor.id}" class="btn btn-danger">O'chirish</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Modal -->
+                    <div class="modal fade" id="updateModal-${mentor.id}" tabindex="-1" aria-labelledby="updateModalLabel-${mentor.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel-${mentor.id}">Update Course</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="${pageContext.request.contextPath}/mentor/update" method="post" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="mentorName-${mentor.id}" class="form-label">Mentor Ismi</label>
+                                            <input type="text" class="form-control" name="name" id="mentorName-${mentor.id}" value="${mentor.name}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mentorBiography-${mentor.id}" class="form-label">Biografiyasi</label>
+                                            <input type="text" class="form-control" name="biography" id="mentorBiography-${mentor.id}" value="${mentor.biography}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="file" class="form-control" name="img" required>
+                                        </div>
+                                        <input type="hidden" name="id" value="${mentor.id}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <button type="submit" class="btn btn-primary">O'zgarishlarni saqlash</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </c:forEach>
             </div>
 

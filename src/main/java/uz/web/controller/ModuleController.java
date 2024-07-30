@@ -4,13 +4,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uz.web.domain.DAO.LessonForModuleDAO;
+import uz.web.domain.DAO.ModuleDAO;
 import uz.web.domain.DTO.ModuleDTO;
 import uz.web.domain.DTO.ModuleUpdateDTO;
+import uz.web.domain.entity.CourseEntity;
 import uz.web.service.LessonService;
 import uz.web.service.ModuleService;
 
@@ -28,10 +27,11 @@ public class ModuleController {
     public String createModule(@ModelAttribute ModuleDTO moduleDTO, Model model) {
         try {
             moduleService.saveModule(moduleDTO);
+            model.addAttribute("courseId", moduleDTO.getCourseId());
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-
+        model.addAttribute("courseId", moduleDTO.getCourseId());
         model.addAttribute("modules", moduleService.getModulesOfCourse(moduleDTO.getCourseId()));
         return "admin-modules-control";
     }
@@ -42,34 +42,37 @@ public class ModuleController {
             List<LessonForModuleDAO> lessons = lessonService.getLessonsOfModule(moduleId);
             model.addAttribute("lessons", lessons);
         } catch (Exception e) {
-            session.setAttribute("moduleId", moduleId);
             model.addAttribute("errorMessage", e.getMessage());
         }
+        model.addAttribute("moduleId", moduleId);
         return "admin-lesson-control";
     }
 
-    @RequestMapping("/delete")
-    public String deleteModule(@RequestParam("moduleId") UUID moduleId, Model model) {
+    @RequestMapping("/delete/{moduleId}")
+    public String deleteModule(@PathVariable("moduleId") UUID moduleId, Model model) {
+        CourseEntity course = moduleService.findById(moduleId).getCourse();
         try {
             moduleService.deleteModule(moduleId);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-
-        model.addAttribute("modules", moduleService.getModulesOfCourse(moduleId));
+        List<ModuleDAO> modules = moduleService.getModulesOfCourse(course.getId());
+        model.addAttribute("courseId", course.getId());
+        model.addAttribute("modules", modules);
         return "admin-modules-control";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateModule(@ModelAttribute ModuleUpdateDTO moduleUpdate, Model model, HttpSession session) {
+    public String updateModule(@ModelAttribute ModuleUpdateDTO moduleUpdate, Model model) {
         try {
             moduleService.update(moduleUpdate);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        model.addAttribute("modules", moduleService.findById(moduleUpdate.getId())
-                .getCourse().getModuleEntities());
+        model.addAttribute("courseId", moduleService.findById(moduleUpdate.getId()).getCourse().getId());
+        model.addAttribute("modules", moduleService.getModulesOfCourse(moduleService.
+                findById(moduleUpdate.getId()).getCourse().getId()));
 
         return "admin-modules-control";
     }
