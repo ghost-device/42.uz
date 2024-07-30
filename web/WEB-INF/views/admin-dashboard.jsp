@@ -93,13 +93,13 @@
                             <img src="${course.imageUrl}" class="card-img-top" alt="${course.name}">
                             <div class="card-body p-2">
                                 <h5 class="card-title">${course.name}</h5>
-                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Price: $${course.price}</p>
-                                <p class="card-text mb-1"><i class="bi bi-person"></i> Mentor: ${course.mentor}</p>
+                                <p class="card-text mb-1"><i class="bi bi-tag"></i> Narxi: $${course.price}</p>
+                                <p class="card-text mb-1"><i class="bi bi-person"></i> Mentor ismi: ${course.mentor}</p>
                             </div>
                             <div class="card-footer p-2">
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${course.id}">O'chirish</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${course.id}">O'zgartirish</button>
-                                <a href="${pageContext.request.contextPath}/course/modules/${course.id}" class="btn btn-secondary btn-sm">Get Modules</a>
+                                <a href="${pageContext.request.contextPath}/course/modules/${course.id}" class="btn btn-secondary btn-sm">Kurs modullarini</a>
                             </div>
                         </div>
                     </div>
@@ -108,15 +108,15 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel-${course.id}">Delete Course</h5>
+                                    <h5 class="modal-title" id="deleteModalLabel-${course.id}">Kursni o'chirish</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    Are you sure you want to delete the course "${course.name}"?
+                                    Haqiqatdan ham ushbu "${course.name}" kursni o'chirmoqchimisiz?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <a href="/course/delete/${course.id}" class="btn btn-danger">Delete</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                    <a href="/course/delete/${course.id}" class="btn btn-danger">O'chirish</a>
                                 </div>
                             </div>
                         </div>
@@ -127,17 +127,17 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="updateModalLabel-${course.id}">Update Course</h5>
+                                    <h5 class="modal-title" id="updateModalLabel-${course.id}">Kursni malumotlarini yangilash</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <form action="${pageContext.request.contextPath}/course/update" method="post" enctype="multipart/form-data">
                                     <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="courseName-${course.id}" class="form-label">Course Name</label>
+                                                <label for="courseName-${course.id}" class="form-label">Kurs ismi</label>
                                                 <input type="text" class="form-control" name="name" id="courseName-${course.id}" value="${course.name}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="coursePrice-${course.id}" class="form-label">Price</label>
+                                                <label for="coursePrice-${course.id}" class="form-label">Narx</label>
                                                 <input type="text" class="form-control" name="price" id="coursePrice-${course.id}" value="${course.price}">
                                             </div>
                                             <div class="mb-3">
@@ -154,8 +154,8 @@
                                             <input type="hidden" name="id" value="${course.id}">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <button type="submit" class="btn btn-primary">O'zgarishlarni saqlash</button>
                                     </div>
                                 </form>
                             </div>
@@ -167,7 +167,7 @@
 
             <!-- Course Creation Form -->
             <div class="form-container">
-                <h3>Create New Course</h3>
+                <h3>Yangi Kurs qo'shish</h3>
 
                 <!-- Error Message Alert -->
                 <c:if test="${not empty errorMessage}">
@@ -178,16 +178,16 @@
 
                 <form action="${pageContext.request.contextPath}/course/create" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="courseName" class="form-label">Course Name</label>
-                        <input type="text" class="form-control" id="courseName" name="name" placeholder="Enter course name" required>
+                        <label for="courseName" class="form-label">Kurs nomi</label>
+                        <input type="text" class="form-control" id="courseName" name="name" placeholder="Kusrni nomini kiriting" required>
                     </div>
                     <div class="mb-3">
-                        <label for="courseDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="courseDescription" name="description" rows="3" placeholder="Enter course description" required></textarea>
+                        <label for="courseDescription" class="form-label">Malumot</label>
+                        <textarea class="form-control" id="courseDescription" name="description" rows="3" placeholder="Kurs haqida ma'lumot" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="coursePrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="coursePrice" name="price" placeholder="Enter course price" step="0.01" required>
+                        <label for="coursePrice" class="form-label">Narx</label>
+                        <input type="number" class="form-control" id="coursePrice" name="price" placeholder="Kurs narxi" step="0.01" required>
                     </div>
                     <div class="mb-3">
                         <label for="mentorSelect" class="form-label">Mentor</label>
@@ -198,10 +198,10 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="courseImage" class="form-label">Course Image</label>
+                        <label for="courseImage" class="form-label">Kurs rasmi</label>
                         <input type="file" class="form-control" id="courseImage" name="img" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Course</button>
+                    <button type="submit" class="btn btn-primary">Kurs qo'shish</button>
                 </form>
             </div>
         </main>
@@ -212,7 +212,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
     // Sample data for the chart
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const labels = ['Yanvar', 'Devral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul'];
     const data = {
         labels: labels,
         datasets: [{

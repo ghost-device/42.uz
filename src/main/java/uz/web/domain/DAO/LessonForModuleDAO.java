@@ -12,6 +12,7 @@ import java.util.UUID;
 public class LessonForModuleDAO {
     private UUID id;
     private String name;
+    private String description;
     private int orderNum;
     private int videoDuration;
 }

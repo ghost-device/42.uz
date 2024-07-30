@@ -20,6 +20,8 @@ public class LessonEntity extends BaseEntity {
     @ManyToOne
     private ModuleEntity module;
 
+    private String description;
+
     private int orderNum;
 
     private String videoId;

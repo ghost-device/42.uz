@@ -93,12 +93,10 @@ public class ModuleService extends BaseService<ModuleEntity> {
 
     @Transactional
     public void update(ModuleUpdateDTO moduleUpdate) {
-        ModuleEntity module = ModuleEntity.builder()
-                .name(moduleUpdate.getName())
-                .description(moduleUpdate.getDescription())
-                .orderNum(moduleUpdate.getOrderNum())
-                .build();
-        module.setId(moduleUpdate.getId());
+        ModuleEntity module = findById(moduleUpdate.getId());
+        module.setDescription(moduleUpdate.getDescription());
+        module.setOrderNum(moduleUpdate.getOrderNum());
+        module.setName(moduleUpdate.getName());
         update(module);
     }
 }

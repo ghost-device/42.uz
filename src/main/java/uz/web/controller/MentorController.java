@@ -45,10 +45,24 @@ public class MentorController {
         return "admin-mentor-page";
     }
 
-    @RequestMapping(value = "/delete/{mentorId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{mentorId}")
     public String deleteMentor(@PathVariable UUID mentorId, Model model) {
         try {
             mentorService.delete(mentorId);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        List<MentorDAO> allMentors = mentorService.getAllMentors();
+        model.addAttribute("mentors", allMentors);
+        return "admin-mentor-page";
+    }
+
+    @RequestMapping(value = "/update")
+    public String updateMentor(@ModelAttribute MentorDAO mentor,
+                               @RequestParam("img") MultipartFile file,
+                               Model model) {
+        try {
+            mentorService.updateMentor(mentor, file);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
