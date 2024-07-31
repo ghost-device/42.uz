@@ -7,12 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.AllPaymentsDAO;
 import uz.web.domain.DAO.PaymentHistoryDAO;
-import uz.web.domain.DTO.AcceptPaymentDTO;
 import uz.web.domain.DTO.PaymentDTO;
 import uz.web.domain.entity.PaymentEntity;
 import uz.web.domain.entity.UserEntity;
 import uz.web.domain.enumerators.PaymentStatus;
-import uz.web.domain.exceptions.CourseNotFoundException;
 import uz.web.domain.exceptions.UserNotFoundException;
 import uz.web.repo.PaymentRepo;
 
@@ -66,10 +64,6 @@ public class PaymentService extends BaseService<PaymentEntity> {
         return paymentHistory;
     }
 
-    public String paymentCheckUrl(String paymentCheckId) {
-        return cloudService.getFileUrl(paymentCheckId);
-    }
-
     public List<AllPaymentsDAO> allPayments(PaymentStatus paymentStatus) {
         List<PaymentEntity> all = paymentRepo.getAll(paymentStatus);
         return getAllPaymentsDAOS(all);
@@ -93,10 +87,6 @@ public class PaymentService extends BaseService<PaymentEntity> {
         return allPayments;
     }
 
-    public List<PaymentEntity> userPayments(PaymentHistoryDAO paymentHistoryDAO) {
-        return paymentRepo.getAllPaymentsByUser(paymentHistoryDAO.getUserId());
-    }
-
 
     @Transactional
     public void acceptPayment(PaymentEntity acceptPayment) {
@@ -108,18 +98,6 @@ public class PaymentService extends BaseService<PaymentEntity> {
                 payment.setStatus(PaymentStatus.ACCEPTED);
                 this.update(payment);
                 userService.setUserBalanceById(user.getId(), payment.getAmount());
-                break;
-            }
-        }
-    }
-
-    @Transactional
-    public void canceledPayment(AcceptPaymentDTO acceptPaymentDTO) {
-        List<PaymentEntity> paymentsByStatus = paymentRepo.getPaymentsByStatus(acceptPaymentDTO.getStatus());
-        for (PaymentEntity payments : paymentsByStatus) {
-            if (payments.getStatus().equals(PaymentStatus.PENDING)) {
-                payments.setStatus(PaymentStatus.CANCELED);
-                this.update(payments);
                 break;
             }
         }

@@ -27,10 +27,6 @@ public class CourseService extends BaseService<CourseEntity> {
         return getCourseDAOS(courseRepo.getAllCourse());
     }
 
-    public List<CourseDAO> getCoursesByMentorId(UUID mentorId) {
-        return getCourseDAOS(courseRepo.getCoursesByMentorId(mentorId));
-    }
-
     public List<CourseDAO> getCoursesByUser(UUID userId) {
         return getCourseDAOS(
                 userService.findById(userId)
@@ -39,10 +35,6 @@ public class CourseService extends BaseService<CourseEntity> {
                         .map(CoursesOfUsersEntity::getCourse)
                         .toList()
         );
-    }
-
-    public CourseEntity findByCourseId(UUID courseId){
-        return courseRepo.findByCourseId(courseId);
     }
 
     public List<CourseDAO> getCourseDAOS(List<CourseEntity> courseEntities) {
