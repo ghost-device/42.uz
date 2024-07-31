@@ -56,10 +56,10 @@ public class RatingService extends BaseService<RatingEntity> {
                 .build());
     }
 
-    public Double avgRate(UUID courseId) {
+    public int avgRate(UUID courseId) {
         CourseEntity course = courseService.findById(courseId);
         List<RatingEntity> ratings = course.getRatingEntities();
-        double ratingSum = 0;
+        int ratingSum = 0;
         for (RatingEntity rating : ratings) {
             ratingSum += rating.getRating();
         }

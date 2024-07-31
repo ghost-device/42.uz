@@ -11,9 +11,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class LessonDTO {
+    private UUID id;
     private String name;
-    private UUID moduleId;
     private int orderNum;
-    private MultipartFile videoOfLesson;
     private int videoDuration;
+    private String description;
 }

@@ -29,6 +29,7 @@ public class LessonService extends BaseService<LessonEntity> {
         for (LessonEntity lesson : moduleService.findById(moduleId).getLessonEntities()) {
             list.add(new LessonForModuleDAO(lesson.getId(), lesson.getName(), lesson.getDescription(), lesson.getOrderNum(), lesson.getVideoDuration()));
         }
+
         return list;
     }
 
@@ -43,10 +44,10 @@ public class LessonService extends BaseService<LessonEntity> {
     }
 
     @Transactional
-    public void saveLesson(LessonDTO lessonDTO) {
+    public void saveLesson(LessonDTO lessonDTO, MultipartFile multipartFile) {
         int orderNum = lessonDTO.getOrderNum();
 
-        List<LessonEntity> lessonEntities = moduleService.findById(lessonDTO.getModuleId()).getLessonEntities();
+        List<LessonEntity> lessonEntities = moduleService.findById(lessonDTO.getId()).getLessonEntities();
 
         for (LessonEntity lesson : lessonEntities) {
             if (lesson.getOrderNum() >= orderNum) {
@@ -57,8 +58,8 @@ public class LessonService extends BaseService<LessonEntity> {
 
         this.save(LessonEntity.builder()
                 .name(lessonDTO.getName())
-                .module(moduleService.findById(lessonDTO.getModuleId()))
-                .videoId(cloudService.uploadFile(lessonDTO.getVideoOfLesson()))
+                .module(moduleService.findById(lessonDTO.getId()))
+                .videoId(cloudService.uploadFile(multipartFile))
                 .videoDuration(lessonDTO.getVideoDuration())
                 .orderNum(lessonDTO.getOrderNum())
                 .build()
@@ -86,24 +87,8 @@ public class LessonService extends BaseService<LessonEntity> {
     }
 
     @Transactional
-    public void save(AddLessonUpdDTO addLessonDTO, MultipartFile file) {
-        int orderNum = addLessonDTO.getOrderNum();
-        setLessonOrders(addLessonDTO, orderNum);
-
-        LessonEntity lesson = LessonEntity.builder()
-                .name(addLessonDTO.getName())
-                .module(moduleService.findById(addLessonDTO.getId()))
-                .orderNum(orderNum)
-                .description(addLessonDTO.getLessonDescription())
-                .videoDuration(addLessonDTO.getVideoDuration())
-                .videoId(cloudService.uploadFile(file))
-                .build();
-        this.save(lesson);
-    }
-
-    @Transactional
     public void updateLesson(AddLessonUpdDTO updateLesson, MultipartFile video) {
-        setLessonOrders(updateLesson, updateLesson.getOrderNum());
+        setLessonOrders(updateLesson);
 
         LessonEntity lesson = findById(updateLesson.getId());
         lesson.setName(updateLesson.getName());
@@ -115,12 +100,13 @@ public class LessonService extends BaseService<LessonEntity> {
     }
 
     @Transactional
-    protected void setLessonOrders(AddLessonUpdDTO updateLesson, int orderNum) {
-
-        List<LessonEntity> lessons = findById(updateLesson.getId()).getModule().getLessonEntities();
+    protected void setLessonOrders(AddLessonUpdDTO neww) {
+        LessonEntity old = findById(neww.getId());
+        List<LessonEntity> lessons = old.getModule().getLessonEntities();
 
         for (LessonEntity lesson : lessons) {
-            if (lesson.getOrderNum() >= orderNum) {
+            if (lesson.getOrderNum() >= neww.getOrderNum()
+                    && lesson.getOrderNum() <= old.getOrderNum()) {
                 lesson.setOrderNum(lesson.getOrderNum() + 1);
                 update(lesson);
             }

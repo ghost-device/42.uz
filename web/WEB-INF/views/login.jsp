@@ -10,7 +10,7 @@
             background-color: #f8f9fa; /* Light grey background */
         }
         .card {
-            background-color: #ffffff; /* White card background */
+            background-color: #ffffff;
             border-color: #dee2e6; /* Light grey border */
         }
         .btn-primary {
@@ -99,10 +99,10 @@
         const toggleIcon = document.getElementById('toggleIcon');
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
-            toggleIcon.textContent = '🙈'; // Change icon to indicate password is visible
+            toggleIcon.textContent = '🙈';
         } else {
             passwordInput.type = 'password';
-            toggleIcon.textContent = '👁️'; // Change icon to indicate password is hidden
+            toggleIcon.textContent = '👁️';
         }
     }
 </script>

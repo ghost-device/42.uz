@@ -1,3 +1,4 @@
+<%@ page import="uz.web.domain.DAO.UserDao" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -44,7 +45,14 @@
             <img src="https://raw.githubusercontent.com/reactanvar/42.uz-loyihasi/main/favicon.ico" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto d-flex align-items-center">
+                <!-- User Balance -->
+                <li class="nav-item me-3">
+                    <span class="navbar-text">
+                        <strong>Balans: <%= ((UserDao) session.getAttribute("user")).getBalance() %></strong>
+                    </span>
+                </li>
+                <!-- Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-list"></i>
@@ -61,27 +69,27 @@
     </div>
 </nav>
 
+
 <div class="container">
-    <h2>Mening Kurslarim</h2>
-    <c:if test="${empty userCourses}">
-        <h4>Sizda kurslar mavjud emas!</h4>
-    </c:if>
-    <div class="row">
-        <c:forEach var="course" items="${userCourses}">
-            <div class="col-md-4">
-                <div class="course-card">
-                    <img src="${course.imageUrl}" alt="Course Image">
-                    <h3>${course.name}</h3>
-                    <p>${course.description}</p>
-                    <a class="btn btn-dark" href="/course/u-modules/${course.id}">Kursga o'tish</a>
+    <c:if test="${not empty userCourses}">
+        <h2>Mening Kurslarim</h2>
+        <div class="row">
+            <c:forEach var="course" items="${userCourses}">
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <img src="${course.imageUrl}" alt="Course Image">
+                        <h3>${course.name}</h3>
+                        <p>${course.description}</p>
+                        <a class="btn btn-dark" href="/course/u-modules/${course.id}">Kursga o'tish</a>
+                    </div>
                 </div>
-            </div>
-        </c:forEach>
-    </div>
+            </c:forEach>
+        </div>
+    </c:if>
 </div>
 
 <div class="container">
-    <h2>Kurslar</h2>
+    <h2>Barcha Kurslar</h2>
     <div class="row">
         <c:forEach var="course" items="${courses}">
             <div class="col-md-4">

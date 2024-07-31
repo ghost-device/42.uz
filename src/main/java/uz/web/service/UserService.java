@@ -26,6 +26,7 @@ public class UserService extends BaseService<UserEntity> {
             this.save(UserEntity.builder()
                     .email(registerDTO.getEmail())
                     .password(registerDTO.getPassword())
+                    .balance(0)
                     .build());
         } catch (Exception e) {
             throw new AuthFailedException("This email already used!");

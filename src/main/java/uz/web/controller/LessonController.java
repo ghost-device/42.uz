@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DTO.AddLessonUpdDTO;
+import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.LessonEntity;
 import uz.web.domain.entity.ModuleEntity;
 import uz.web.service.LessonService;
@@ -18,19 +19,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LessonController {
     private final LessonService lessonService;
-    private final ModuleService moduleService;
 
     @RequestMapping("/add")
-    public String addLesson(@ModelAttribute AddLessonUpdDTO addLesson,
+    public String addLesson(@ModelAttribute LessonDTO lessonDTO,
                             @RequestParam("videoFile") MultipartFile video,
                             Model model) {
         try {
-            lessonService.save(addLesson, video);
+            lessonService.saveLesson(lessonDTO, video);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        model.addAttribute("moduleId", addLesson.getId());
-        model.addAttribute("lessons", lessonService.getLessonsOfModule(addLesson.getId()));
+
+        model.addAttribute("moduleId", lessonDTO.getId());
+        model.addAttribute("lessons", lessonService.getLessonsOfModule(lessonDTO.getId()));
 
         return "admin-lesson-control";
     }

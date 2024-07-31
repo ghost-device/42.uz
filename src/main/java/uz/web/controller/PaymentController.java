@@ -52,9 +52,4 @@ public class PaymentController {
 
         return "admin-payment-control";
     }
-
-
-
 }
-
-

@@ -45,7 +45,7 @@ public class CourseService extends BaseService<CourseEntity> {
         return courseRepo.findByCourseId(courseId);
     }
 
-    private List<CourseDAO> getCourseDAOS(List<CourseEntity> courseEntities) {
+    public List<CourseDAO> getCourseDAOS(List<CourseEntity> courseEntities) {
         List<CourseDAO> list = new ArrayList<>();
 
         for (CourseEntity course : courseEntities) {

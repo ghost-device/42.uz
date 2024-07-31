@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class AddLessonUpdDTO {
-    private UUID id; // moduleId or lessonId
+    private UUID id;
     private String name;
     private String lessonDescription;
     private int orderNum;
