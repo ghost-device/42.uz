@@ -58,7 +58,7 @@
                         <i class="bi bi-list"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/payments">To'lovlar</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/payment/user/<%= ((UserDao) session.getAttribute("user")).getId() %>">To'lovlar</a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/">Chiqish</a></li>
