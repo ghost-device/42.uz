@@ -3,22 +3,25 @@ package uz.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import uz.web.domain.DAO.PaymentHistoryDAO;
 import uz.web.domain.DTO.AcceptPaymentDTO;
 import uz.web.domain.DTO.PaymentDTO;
 import uz.web.domain.entity.PaymentEntity;
 import uz.web.domain.enumerators.PaymentStatus;
 import uz.web.service.PaymentService;
+import uz.web.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/payment")
 public class PaymentController {
     private final PaymentService paymentService;
+    private final UserService userService;
 
     @RequestMapping
     public String paymentPage(Model model) {
@@ -28,16 +31,28 @@ public class PaymentController {
         return "admin-payment-control";
     }
 
-    @RequestMapping(value = "/fillbalance", method = RequestMethod.POST)
-    public String fillBalance(@ModelAttribute PaymentDTO paymentDTO, Model model){
+    @RequestMapping(value = "/fill-balance", method = RequestMethod.POST)
+    public String fillBalance(@ModelAttribute PaymentDTO paymentDTO,
+                              @RequestParam("checkImg") MultipartFile file,
+                              Model model){
         try {
-            paymentService.fillBalance(paymentDTO);
+            paymentService.fillBalance(paymentDTO, file);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
         return "main-menu";
     }
+
+    @RequestMapping("/user/{userId}")
+    public String userPayments(@PathVariable("userId") UUID userId, Model model){
+        List<PaymentHistoryDAO> paymentHistoryDAOS = paymentService.paymentHistoryOfUser(userId);
+
+
+        model.addAttribute("payments", paymentHistoryDAOS);
+        return "user-payment";
+    }
+
 
 
     @RequestMapping(value = "/approve/{paymentId}", method = RequestMethod.POST)

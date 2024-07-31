@@ -3,6 +3,7 @@ package uz.web.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.AllPaymentsDAO;
 import uz.web.domain.DAO.PaymentHistoryDAO;
 import uz.web.domain.DTO.AcceptPaymentDTO;
@@ -27,13 +28,16 @@ public class PaymentService extends BaseService<PaymentEntity> {
     private final CloudService cloudService;
 
     @Transactional
-    public void fillBalance(PaymentDTO payment) {
+    public void fillBalance(PaymentDTO payment, MultipartFile multipartFile) {
         paymentRepo.save(PaymentEntity.builder()
                 .user(userService.findById(payment.getId()))
                 .amount(payment.getAmount())
-                .paymentCheckId(cloudService.uploadFile(payment.getMultipartOfPaymentCheck()))
+                .paymentCheckId(cloudService.uploadFile(multipartFile))
                 .status(PaymentStatus.PENDING)
                 .build());
+        UserEntity user = userService.findById(payment.getId());
+        user.setBalance(user.getBalance() + payment.getAmount());
+        userService.update(user);
     }
 
     public List<PaymentHistoryDAO> paymentHistoryOfUser(UUID userId) {

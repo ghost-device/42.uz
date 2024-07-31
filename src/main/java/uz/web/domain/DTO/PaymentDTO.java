@@ -14,5 +14,4 @@ import java.util.UUID;
 public class PaymentDTO {
     private UUID id;
     private Integer amount;
-    private MultipartFile multipartOfPaymentCheck;
 }
