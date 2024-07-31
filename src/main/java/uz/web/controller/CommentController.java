@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.CommentDTO;
-import uz.web.service.CommentService;
-import uz.web.service.CourseService;
-import uz.web.service.ModuleService;
-import uz.web.service.RatingService;
+import uz.web.service.*;
 
 import java.util.List;
 
@@ -24,6 +21,7 @@ public class CommentController {
     private final CourseService courseService;
     private final ModuleService moduleService;
     private final RatingService ratingService;
+    private final UserService userService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addComment(@ModelAttribute CommentDTO commentDTO, HttpSession session, Model model){
@@ -38,6 +36,7 @@ public class CommentController {
         model.addAttribute("isBuy", true);
         model.addAttribute("modules", moduleService.getModulesOfCourse(commentDTO.getCourseId()));
         model.addAttribute("course", courseService.getCourseDAOS(List.of(courseService.findById(commentDTO.getCourseId()))).get(0));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-modules";
     }
 }

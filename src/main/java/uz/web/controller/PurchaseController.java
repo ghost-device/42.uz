@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DAO.UserDao;
 import uz.web.service.*;
 
@@ -22,13 +21,14 @@ public class PurchaseController {
     private final ModuleService moduleService;
     private final RatingService ratingService;
     private final CommentService commentService;
+    private final UserService userService;
 
     @RequestMapping(value = "/{courseId}")
-    public String purchaseToCourse(@PathVariable("courseId") UUID courseId, HttpSession session, Model model){
+    public String purchaseToCourse(@PathVariable("courseId") UUID courseId, HttpSession session, Model model) {
         try {
             courseOfUsersService.purchaseCourse(courseId, ((UserDao) session.getAttribute("user")).getId());
             model.addAttribute("isBuy", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
@@ -36,6 +36,7 @@ public class PurchaseController {
         model.addAttribute("rating", ratingService.avgRate(courseId));
         model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
         model.addAttribute("course", courseService.getCourseDAOS(List.of(courseService.findById(courseId))).get(0));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-modules";
     }
 }

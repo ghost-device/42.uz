@@ -26,7 +26,7 @@
                 <!-- User Balance -->
                 <li class="nav-item me-3">
                     <span class="navbar-text">
-                        <strong>Balans: <%= ((UserDao) session.getAttribute("user")).getBalance() %></strong>
+                        <strong>Balans: ${balance}</strong>
                     </span>
                 </li>
                 <!-- Dropdown Menu -->
@@ -80,6 +80,7 @@
                         <th>#</th>
                         <th>Sana</th>
                         <th>Miqdori</th>
+                        <th>Statusi</th>
                         <th>Amallar</th>
                     </tr>
                     </thead>
@@ -89,6 +90,7 @@
                             <td>1</td>
                             <td>${payment.paymentDate}</td>
                             <td>${payment.amount} UZS</td>
+                            <td>${payment.status}</td>
                             <td>
                                 <button type="button" class="btn btn-dark" data-bs-toggle="modal"
                                         data-bs-target="#paymentModal-${payment.paymentCheckId}">Chekni ko'rish

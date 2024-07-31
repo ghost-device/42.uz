@@ -11,26 +11,25 @@ import uz.web.repo.CommentRepo;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class CommentService extends BaseService<CommentEntity>{
+public class CommentService extends BaseService<CommentEntity> {
     private final CommentRepo commentRepo;
     private final UserService userService;
     private final CourseService courseService;
 
     @Transactional
-    public void saveComment(CommentDTO commentDTO, UUID userId){
+    public void saveComment(CommentDTO commentDTO, UUID userId) {
         this.save(new CommentEntity(
                 userService.findById(userId),
                 courseService.findById(commentDTO.getCourseId()),
-                commentDTO.getText()
+                commentDTO.getComment()
         ));
     }
 
-    public List<CommentDAO> getCommentOfCourse(UUID courseId){
+    public List<CommentDAO> getCommentOfCourse(UUID courseId) {
         CourseEntity course = courseService.findById(courseId);
 
         return course.getCommentEntities()
@@ -38,19 +37,6 @@ public class CommentService extends BaseService<CommentEntity>{
                 .sorted(Comparator.comparing(CommentEntity::getCreatedAt).reversed())
                 .map((c) -> new CommentDAO(c.getUser().getEmail(), c.getComment()))
                 .toList();
-    }
-
-    @Transactional
-    public void deleteComment(UUID commentId){
-        CommentEntity comment = this.findById(commentId);
-
-        CourseEntity course = comment.getCourse();
-
-        List<CommentEntity> commentEntities = course.getCommentEntities();
-        commentEntities.remove(comment);
-        course.setCommentEntities(commentEntities);
-
-        courseService.update(course);
     }
 
     @Override

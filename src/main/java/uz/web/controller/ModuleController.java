@@ -7,11 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.web.domain.DAO.LessonForModuleDAO;
 import uz.web.domain.DAO.ModuleDAO;
+import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.ModuleDTO;
 import uz.web.domain.DTO.ModuleUpdateDTO;
 import uz.web.domain.entity.CourseEntity;
 import uz.web.service.LessonService;
 import uz.web.service.ModuleService;
+import uz.web.service.UserService;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class ModuleController {
     private final ModuleService moduleService;
     private final LessonService lessonService;
+    private final UserService userService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String createModule(@ModelAttribute ModuleDTO moduleDTO, Model model) {
@@ -49,12 +52,13 @@ public class ModuleController {
     }
 
     @RequestMapping("/u-lessons/{moduleId}")
-    public String lessonsOfModule(@PathVariable("moduleId") UUID moduleId, Model model) {
+    public String lessonsOfModule(@PathVariable("moduleId") UUID moduleId, Model model, HttpSession session) {
         try{
             model.addAttribute("lessons", lessonService.getLessonsOfModule(moduleId));
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-lessons";
     }
 
