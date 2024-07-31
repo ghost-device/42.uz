@@ -81,11 +81,6 @@
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
-            <div class="row mb-5">
-                <div class="col-md-12">
-                    <canvas id="statisticsChart"></canvas>
-                </div>
-            </div>
             <div class="row">
                 <c:forEach var="course" items="${courses}">
                     <div class="col-md-4 mb-3">
@@ -95,6 +90,7 @@
                                 <h5 class="card-title">${course.name}</h5>
                                 <p class="card-text mb-1"><i class="bi bi-tag"></i> Narxi: $${course.price}</p>
                                 <p class="card-text mb-1"><i class="bi bi-person"></i> Mentor ismi: ${course.mentor}</p>
+                                <p class="card-text mb-1"><i class="bi bi-paperclip"></i> Kurs haqida: ${course.description}</p>
                             </div>
                             <div class="card-footer p-2">
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${course.id}">O'chirish</button>
@@ -139,6 +135,10 @@
                                             <div class="mb-3">
                                                 <label for="coursePrice-${course.id}" class="form-label">Narx</label>
                                                 <input type="text" class="form-control" name="price" id="coursePrice-${course.id}" value="${course.price}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="coursePrice-${course.id}" class="form-label">Kurs Haqida</label>
+                                                <input type="text" class="form-control" name="description" id="courseDescription-${course.id}" value="${course.description}">
                                             </div>
                                             <div class="mb-3">
                                                 <input type="file" class="form-control" name="img" required>

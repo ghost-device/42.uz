@@ -88,12 +88,12 @@
 
         .rating-display i {
             font-size: 2rem; /* Increase the size of the stars */
-            color: #e0e0e0; /* Light grey for empty stars */
-            margin: 0 2px; /* Add some space between stars */
+            color: #e0e0e0;
+            margin: 0 2px;
         }
 
         .rating-display i.filled {
-            color: gold; /* Gold for filled stars */
+            color: gold;
         }
     </style>
 </head>
@@ -152,30 +152,28 @@
             </div>
 
             <div class="card">
-                <!-- Rating Form -->
-                <form action="${pageContext.request.contextPath}/rate" method="post" class="rating-form">
-                    <div class="form-group">
-                        <select id="rating" name="rating" class="form-select">
-                            <option value="1">1 Yulduz</option>
-                            <option value="2">2 Yulduz</option>
-                            <option value="3">3 Yulduz</option>
-                            <option value="4">4 Yulduz</option>
-                            <option value="5">5 Yulduz</option>
-                        </select>
-                    </div>
-                    <input type="hidden" name="courseId" value="${course.id}">
-                    <button type="submit" class="btn btn-dark mt-2">Yuborish</button>
-                </form>
+                <c:if test="${isBuy}">
+                    <form action="${pageContext.request.contextPath}/rating/rate" method="post" class="rating-form">
+                        <div class="form-group">
+                            <select id="rating" name="rating" class="form-select">
+                                <option value="1">1 Yulduz</option>
+                                <option value="2">2 Yulduz</option>
+                                <option value="3">3 Yulduz</option>
+                                <option value="4">4 Yulduz</option>
+                                <option value="5">5 Yulduz</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="courseId" value="${course.id}">
+                        <button type="submit" class="btn btn-dark mt-2">Yuborish</button>
+                    </form>
+                </c:if>
 
-                <!-- Star Rating Display -->
                 <div class="rating-display">
                     <c:forEach var="i" begin="1" end="5">
                         <i class="bi bi-star-fill <c:if test="${i <= rating}">filled</c:if>"></i>
                     </c:forEach>
                 </div>
             </div>
-
-
 
             <div class="card">
                 <h3>Izohlar</h3>
@@ -189,16 +187,18 @@
                     </div>
                 </c:forEach>
 
-                <div class="comment-form">
-                    <form action="${pageContext.request.contextPath}/comments/add" method="post">
-                        <div class="mb-3">
-                            <label for="commentText" class="form-label">Izohingizni kiriting:</label>
-                            <textarea class="form-control" id="commentText" name="commentText" rows="3" required></textarea>
-                        </div>
-                        <input type="hidden" name="courseId" value="${course.id}">
-                        <button type="submit" class="btn btn-dark">Yuborish</button>
-                    </form>
-                </div>
+                <c:if test="${isBuy}">
+                    <div class="comment-form">
+                        <form action="${pageContext.request.contextPath}/comment/add" method="post">
+                            <div class="mb-3">
+                                <label for="commentText" class="form-label">Izohingizni kiriting:</label>
+                                <textarea class="form-control" id="commentText" name="text" rows="3" required></textarea>
+                            </div>
+                            <input type="hidden" name="courseId" value="${course.id}">
+                            <button type="submit" class="btn btn-dark">Yuborish</button>
+                        </form>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="col-md-8">
@@ -221,7 +221,7 @@
                                 <td>${module.name}</td>
                                 <td>${module.description}</td>
                                 <td>
-                                    <a class="btn btn-dark" href="#">Darslar</a>
+                                    <a class="btn btn-dark" href="/module/u-lessons/${module.id}">Darslar</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -240,7 +240,7 @@
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.classList.add('hidden');
-            }, 5000); // Hide after 5 seconds
+            }, 5000);
         }
     });
 </script>

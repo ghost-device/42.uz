@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DAO.UserDao;
-import uz.web.service.CourseOfUsersService;
-import uz.web.service.CourseService;
-import uz.web.service.ModuleService;
+import uz.web.service.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +20,8 @@ public class PurchaseController {
     private final CourseOfUsersService courseOfUsersService;
     private final CourseService courseService;
     private final ModuleService moduleService;
+    private final RatingService ratingService;
+    private final CommentService commentService;
 
     @RequestMapping(value = "/{courseId}")
     public String purchaseToCourse(@PathVariable("courseId") UUID courseId, HttpSession session, Model model){
@@ -32,6 +32,8 @@ public class PurchaseController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
+        model.addAttribute("comment", commentService.getCommentOfCourse(courseId));
+        model.addAttribute("rating", ratingService.avgRate(courseId));
         model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
         model.addAttribute("course", courseService.getCourseDAOS(List.of(courseService.findById(courseId))).get(0));
         return "user-modules";

@@ -96,7 +96,7 @@
                             <td>
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${module.id}">O'chirish</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${module.id}">O'zgartirish</button>
-                                <a href="${pageContext.request.contextPath}/module/lessons?moduleId=${module.id}" class="btn btn-secondary btn-sm">Modul darslari</a>
+                                <a href="${pageContext.request.contextPath}/module/lessons/${module.id}" class="btn btn-secondary btn-sm">Modul darslari</a>
                             </td>
                         </tr>
 

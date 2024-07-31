@@ -1,6 +1,7 @@
 package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Scope("singleton")
 public class PaymentService extends BaseService<PaymentEntity> {
     private final PaymentRepo paymentRepo;
     private final UserService userService;
@@ -52,7 +54,7 @@ public class PaymentService extends BaseService<PaymentEntity> {
 
         for (PaymentEntity payment : paymentEntities) {
             paymentHistory.add(PaymentHistoryDAO.builder()
-                    .paymentCheckId(payment.getPaymentCheckId())
+                    .paymentCheckId(cloudService.getFileUrl(payment.getPaymentCheckId()))
                     .status(payment.getStatus())
                     .amount(payment.getAmount())
                     .paymentDate(payment.getUpdatedAt())

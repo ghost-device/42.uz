@@ -51,7 +51,6 @@ public class PaymentController {
     public String userPayments(@PathVariable("userId") UUID userId, Model model) {
         List<PaymentHistoryDAO> paymentHistoryDAOS = paymentService.paymentHistoryOfUser(userId);
 
-
         model.addAttribute("payments", paymentHistoryDAOS);
         return "user-payment";
     }
@@ -64,6 +63,7 @@ public class PaymentController {
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
+
         model.addAttribute("pendingPayments", paymentService.allPayments(PaymentStatus.PENDING));
         model.addAttribute("otherPayments", paymentService.allPayments());
 

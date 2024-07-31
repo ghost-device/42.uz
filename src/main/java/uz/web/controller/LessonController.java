@@ -1,10 +1,13 @@
 package uz.web.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import uz.web.domain.DAO.LessonWithVideoDAO;
+import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.AddLessonUpdDTO;
 import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.LessonEntity;
@@ -19,6 +22,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LessonController {
     private final LessonService lessonService;
+
+    @RequestMapping("/{lessonId}")
+    public String getVideo(@PathVariable("lessonId") UUID lessonId,  HttpSession httpSession, Model model){
+        try {
+            LessonWithVideoDAO lessonWithVideo = lessonService.getLessonWithVideo(lessonId, ((UserDao) httpSession.getAttribute("user")).getId());
+            model.addAttribute("lesson", lessonWithVideo);
+            return "video";
+        } catch (Exception e){
+            model.addAttribute("lessons", lessonService.getLessonsOfModule(lessonService.findById(lessonId).getModule().getId()));
+            model.addAttribute("errorMessage", e.getMessage());
+            return "user-lessons";
+        }
+    }
 
     @RequestMapping("/add")
     public String addLesson(@ModelAttribute LessonDTO lessonDTO,

@@ -9,10 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.CourseDTO;
 import uz.web.domain.DTO.CourseUpdateDTO;
-import uz.web.service.CourseOfUsersService;
-import uz.web.service.CourseService;
-import uz.web.service.MentorService;
-import uz.web.service.ModuleService;
+import uz.web.service.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +22,8 @@ public class CourseController {
     private final CourseService courseService;
     private final ModuleService moduleService;
     private final CourseOfUsersService courseOfUsersService;
+    private final CommentService commentService;
+    private final RatingService ratingService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String adminCoursesControl(@ModelAttribute CourseDTO courseDTO,
@@ -96,6 +95,8 @@ public class CourseController {
             model.addAttribute("isBuy", false);
         }
 
+        model.addAttribute("rating", ratingService.avgRate(courseId));
+        model.addAttribute("comments", commentService.getCommentOfCourse(courseId));
         return "user-modules";
     }
 }

@@ -56,6 +56,8 @@ public class MentorService extends BaseService<MentorEntity> {
     public void updateMentor(MentorDAO mentor, MultipartFile file) {
         MentorEntity mentorEntity = findById(mentor.getId());
         mentorEntity.setPictureId(cloudService.uploadFile(file));
+        mentorEntity.setName(mentor.getName());
+        mentorEntity.setBiography(mentor.getBiography());
         this.update(mentorEntity);
     }
 }

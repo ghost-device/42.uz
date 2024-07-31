@@ -36,8 +36,8 @@ public class ModuleController {
         return "admin-modules-control";
     }
 
-    @RequestMapping("/lessons")
-    public String moduleLessons(@RequestParam("moduleId") UUID moduleId, Model model, HttpSession session) {
+    @RequestMapping("/lessons/{moduleId}")
+    public String moduleLessons(@PathVariable("moduleId") UUID moduleId, Model model) {
         try {
             List<LessonForModuleDAO> lessons = lessonService.getLessonsOfModule(moduleId);
             model.addAttribute("lessons", lessons);
@@ -46,6 +46,16 @@ public class ModuleController {
         }
         model.addAttribute("moduleId", moduleId);
         return "admin-lesson-control";
+    }
+
+    @RequestMapping("/u-lessons/{moduleId}")
+    public String lessonsOfModule(@PathVariable("moduleId") UUID moduleId, Model model) {
+        try{
+            model.addAttribute("lessons", lessonService.getLessonsOfModule(moduleId));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        return "user-lessons";
     }
 
     @RequestMapping("/delete/{moduleId}")

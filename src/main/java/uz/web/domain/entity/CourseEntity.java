@@ -26,10 +26,10 @@ public class CourseEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "course")
     private List<ModuleEntity> moduleEntities;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     private List<RatingEntity> ratingEntities;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "course")
     private List<CommentEntity> commentEntities;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "course")

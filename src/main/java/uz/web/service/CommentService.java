@@ -2,10 +2,14 @@ package uz.web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import uz.web.domain.DAO.CommentDAO;
+import uz.web.domain.DTO.CommentDTO;
 import uz.web.domain.entity.CommentEntity;
 import uz.web.domain.entity.CourseEntity;
 import uz.web.repo.CommentRepo;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,40 +17,59 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class CommentService extends BaseService<CommentEntity>{
-
     private final CommentRepo commentRepo;
+    private final UserService userService;
     private final CourseService courseService;
 
-    public void deleteComment(CommentEntity commentEntity){
-        List<CommentEntity> byComment = commentRepo.findByComment(commentEntity.getId());
-        CourseEntity course = courseService.findByCourseId(commentEntity.getCourse().getId());
+    @Transactional
+    public void saveComment(CommentDTO commentDTO, UUID userId){
+        this.save(new CommentEntity(
+                userService.findById(userId),
+                courseService.findById(commentDTO.getCourseId()),
+                commentDTO.getText()
+        ));
+    }
 
-        byComment.removeIf(commentEntity1 ->
-                commentEntity1.getCourse().getId().equals(commentEntity.getCourse().getId()) &&
-                commentEntity1.getUser().getId().equals(commentEntity.getUser().getId()));
+    public List<CommentDAO> getCommentOfCourse(UUID courseId){
+        CourseEntity course = courseService.findById(courseId);
 
-        course.setCommentEntities(byComment);
+        return course.getCommentEntities()
+                .stream()
+                .sorted(Comparator.comparing(CommentEntity::getCreatedAt).reversed())
+                .map((c) -> new CommentDAO(c.getUser().getEmail(), c.getComment()))
+                .toList();
+    }
+
+    @Transactional
+    public void deleteComment(UUID commentId){
+        CommentEntity comment = this.findById(commentId);
+
+        CourseEntity course = comment.getCourse();
+
+        List<CommentEntity> commentEntities = course.getCommentEntities();
+        commentEntities.remove(comment);
+        course.setCommentEntities(commentEntities);
 
         courseService.update(course);
     }
 
-
     @Override
     public void save(CommentEntity commentEntity) {
+        commentRepo.save(commentEntity);
     }
 
     @Override
     public CommentEntity findById(UUID id) {
-        return null;
+        return commentRepo.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
-
+        commentRepo.delete(id);
     }
 
     @Override
     public void update(CommentEntity commentEntity) {
-
+        commentRepo.update(commentEntity);
     }
 }

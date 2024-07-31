@@ -23,14 +23,24 @@ public class RatingService extends BaseService<RatingEntity> {
     private final CourseService courseService;
 
     @Transactional
-    public void rateCourse(RatingDTO rating) {
-        UserEntity user = userService.findById(rating.getUserId());
+    public void rateCourse(RatingDTO rating, UUID userId) {
+        UserEntity user = userService.findById(userId);
         CourseEntity course = courseService.findById(rating.getCourseId());
+
         if (user == null) {
             throw new UserNotFoundException("User not found!");
         }
+
         if (course == null) {
             throw new CourseNotFoundException("Course not found!");
+        }
+
+        for (RatingEntity entity : course.getRatingEntities()) {
+            if (entity.getUser().getId().equals(userId)){
+                entity.setRating(rating.getRating());
+                this.update(entity);
+                return;
+            }
         }
 
         List<CoursesOfUsersEntity> userCourses = user.getCoursesOfUsersEntities();
@@ -50,7 +60,7 @@ public class RatingService extends BaseService<RatingEntity> {
         }
 
         this.save(RatingEntity.builder()
-                .user(userService.findById(rating.getUserId()))
+                .user(userService.findById(userId))
                 .rating(rating.getRating())
                 .course(courseService.findById(rating.getCourseId()))
                 .build());
@@ -63,7 +73,8 @@ public class RatingService extends BaseService<RatingEntity> {
         for (RatingEntity rating : ratings) {
             ratingSum += rating.getRating();
         }
-        return ratingSum / ratings.size();
+
+        return ratingSum == 0 ? 0 : ratingSum / ratings.size();
     }
 
     @Override

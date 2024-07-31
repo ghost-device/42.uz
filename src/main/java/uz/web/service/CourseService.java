@@ -80,6 +80,7 @@ public class CourseService extends BaseService<CourseEntity> {
         CourseEntity course = this.findById(courseDTO.getId());
 
         course.setName(courseDTO.getName());
+        course.setPrice(courseDTO.getPrice());
         course.setDescription(courseDTO.getDescription());
         course.setImageId(cloudService.uploadFile(multipartFile));
         course.setMentor(mentorService.findById(courseDTO.getMentorId()));
