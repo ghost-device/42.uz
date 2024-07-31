@@ -30,12 +30,12 @@ public class PaymentService extends BaseService<PaymentEntity> {
     @Transactional
     public void fillBalance(PaymentDTO payment, MultipartFile multipartFile) {
         paymentRepo.save(PaymentEntity.builder()
-                .user(userService.findById(payment.getId()))
+                .user(userService.findById(payment.getUserId()))
                 .amount(payment.getAmount())
                 .paymentCheckId(cloudService.uploadFile(multipartFile))
                 .status(PaymentStatus.PENDING)
                 .build());
-        UserEntity user = userService.findById(payment.getId());
+        UserEntity user = userService.findById(payment.getUserId());
         user.setBalance(user.getBalance() + payment.getAmount());
         userService.update(user);
     }

@@ -55,16 +55,17 @@
         <div class="col-4">
             <div class="form-control">
                 <h2 class="mb-4">Balansni to'ldirish</h2>
-                <form action="${pageContext.request.contextPath}/fill-balance" method="post"
+                <form action="${pageContext.request.contextPath}/payment/fill-balance" method="post"
                       enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="amount" class="form-label">Summani kiriting:</label>
                         <input type="number" class="form-control" id="amount" name="amount"
                                placeholder="Summani kiriting" required>
+                        <input type="hidden" name="userId" value="<%= ((UserDao) session.getAttribute("user")).getId() %>">
                     </div>
                     <div class="mb-3">
                         <label for="check" class="form-label">Tolov cheki:</label>
-                        <input type="file" class="form-control" id="check" name="check" required>
+                        <input type="file" class="form-control" id="check" name="checkImg" required>
                     </div>
                     <button type="submit" class="btn btn-dark mt-4">Tasdiqlash</button>
                 </form>

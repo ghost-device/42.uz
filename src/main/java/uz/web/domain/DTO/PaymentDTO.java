@@ -12,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class PaymentDTO {
-    private UUID id;
+    private UUID userId;
     private Integer amount;
 }
