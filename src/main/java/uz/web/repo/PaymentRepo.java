@@ -15,7 +15,7 @@ public class PaymentRepo extends BaseRepo<PaymentEntity> {
     }
 
     public List<PaymentEntity> getAll(PaymentStatus paymentStatus) {
-        return entityManager.createQuery("from PaymentEntity where status = :paymentStatus", PaymentEntity.class).getResultList();
+        return entityManager.createQuery("from PaymentEntity where status = :paymentStatus", PaymentEntity.class).setParameter("paymentStatus", paymentStatus).getResultList();
     }
 
     public List<PaymentEntity> getAll() {

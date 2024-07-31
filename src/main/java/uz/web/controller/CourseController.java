@@ -85,6 +85,7 @@ public class CourseController {
         model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
         model.addAttribute("course", courseService.findById(courseId));
 
-        return "";
+
+        return "user-modules";
     }
 }

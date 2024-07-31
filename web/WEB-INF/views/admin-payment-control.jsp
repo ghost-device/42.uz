@@ -89,9 +89,8 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
             <!-- Pending payments  -->
             <div class="container">
-
                 <c:choose>
-                    <c:when test="${pendingPayments.size > 0}">
+                    <c:when test="${not empty pendingPayments}">
                         <div class="row">
                             <h3 class="mb-4">Tasdiqlanishi kutilayotgan to'lovlar</h3>
 
@@ -196,11 +195,10 @@
                 </c:choose>
             </div>
 
-            <!-- Other payments  -->
             <div class="container mt-5">
 
                 <c:choose>
-                    <c:when test="${otherPayments.size > 0}">
+                    <c:when test="${not empty otherPayments}">
                         <div class="row">
                             <c:forEach var="otherPayment" items="${otherPayments}">
                                 <h3 class="mb-4">Boshqa to'lovlar</h3>

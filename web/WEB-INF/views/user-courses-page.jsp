@@ -8,7 +8,7 @@
   <style>
     body {
       background-color: white; /* Light grey background */
-      color: #212529; /* Dark grey text */
+      color: #212529;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -36,7 +36,6 @@
   </style>
 </head>
 <body>
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-1 p-3 border-dark" style="font-size: 23px">
   <div class="container-fluid">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/">
@@ -66,7 +65,6 @@
 <!-- Courses Content -->
 <div class="container">
   <div class="row">
-    <!-- Sample Course Card -->
     <c:forEach var="course" items="${courses}">
       <div class="col-md-4">
         <div class="course-card">
@@ -78,7 +76,6 @@
         </div>
       </div>
     </c:forEach>
-    <!-- Add more course cards as needed -->
   </div>
 </div>
 

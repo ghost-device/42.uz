@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uz.web.service.UserService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-//    @RequestMapping("")
+    @RequestMapping("/main-menu")
+    public String userMainMenu(){
+        return "user-main-menu";
+    }
 }
