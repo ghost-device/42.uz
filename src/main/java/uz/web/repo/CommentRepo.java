@@ -19,6 +19,11 @@ public class CommentRepo extends BaseRepo<CommentEntity>{
                 .getResultList();
 
     }
+
+    public List<CommentEntity> getComments(UUID courseId) {
+        return entityManager.createQuery("from CommentEntity c where c.course.id = :course", CommentEntity.class)
+                .setParameter("course", courseId).getResultList();
+    }
 }
 
 

@@ -20,6 +20,7 @@ public class UserController {
     public String userMainMenu(Model model, HttpSession session){
         model.addAttribute("courses", courseService.getAllCourse());
         model.addAttribute("userCourses", courseService.getCoursesByUser(((UserDao) session.getAttribute("user")).getId()));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-main-menu";
     }
 }

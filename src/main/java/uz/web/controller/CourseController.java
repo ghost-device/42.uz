@@ -24,6 +24,7 @@ public class CourseController {
     private final CourseOfUsersService courseOfUsersService;
     private final CommentService commentService;
     private final RatingService ratingService;
+    private final UserService userService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String adminCoursesControl(@ModelAttribute CourseDTO courseDTO,
@@ -42,8 +43,9 @@ public class CourseController {
     }
 
     @RequestMapping()
-    public String throwToCoursesPageOfUser(Model model){
+    public String throwToCoursesPageOfUser(Model model, HttpSession session){
         model.addAttribute("courses", courseService.getAllCourse());
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("userId")).getId()).getBalance());
         return "user-courses-page";
     }
 
@@ -97,6 +99,7 @@ public class CourseController {
 
         model.addAttribute("rating", ratingService.avgRate(courseId));
         model.addAttribute("comments", commentService.getCommentOfCourse(courseId));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-modules";
     }
 }

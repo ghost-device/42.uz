@@ -22,6 +22,7 @@ public class PurchaseController {
     private final ModuleService moduleService;
     private final RatingService ratingService;
     private final CommentService commentService;
+    private final UserService userService;
 
     @RequestMapping(value = "/{courseId}")
     public String purchaseToCourse(@PathVariable("courseId") UUID courseId, HttpSession session, Model model){
@@ -36,6 +37,7 @@ public class PurchaseController {
         model.addAttribute("rating", ratingService.avgRate(courseId));
         model.addAttribute("modules", moduleService.getModulesOfCourse(courseId));
         model.addAttribute("course", courseService.getCourseDAOS(List.of(courseService.findById(courseId))).get(0));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-modules";
     }
 }

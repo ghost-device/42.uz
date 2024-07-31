@@ -99,17 +99,11 @@ public class PaymentService extends BaseService<PaymentEntity> {
 
 
     @Transactional
-    public void acceptPayment(AcceptPaymentDTO acceptPayment) {
-        if (userService.findById(acceptPayment.getBuyerId()) == null) {
-            throw new UserNotFoundException("User not found");
-        }
-        if (userService.findById(acceptPayment.getCourseId()) == null) {
-            throw new CourseNotFoundException("Course not found");
-        }
+    public void acceptPayment(PaymentEntity acceptPayment) {
         List<PaymentEntity> payments = paymentRepo.getPaymentsByStatus(acceptPayment.getStatus());
         for (PaymentEntity payment : payments) {
             if (payment.getStatus() == PaymentStatus.PENDING) {
-                UserEntity user = userService.findById(acceptPayment.getBuyerId());
+                UserEntity user = userService.findById(acceptPayment.getUser().getId());
                 user.setBalance(user.getBalance() - payment.getAmount());
                 payment.setStatus(PaymentStatus.ACCEPTED);
                 this.update(payment);

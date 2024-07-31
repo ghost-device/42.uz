@@ -77,11 +77,12 @@ public class CourseService extends BaseService<CourseEntity> {
 
     @Transactional
     public void update(CourseUpdateDTO courseDTO, MultipartFile multipartFile){
-        CourseEntity course = this.findById(courseDTO.getId());
+        CourseEntity course = findById(courseDTO.getId());
 
         course.setName(courseDTO.getName());
         course.setPrice(courseDTO.getPrice());
         course.setDescription(courseDTO.getDescription());
+        course.setPrice(courseDTO.getPrice());
         course.setImageId(cloudService.uploadFile(multipartFile));
         course.setMentor(mentorService.findById(courseDTO.getMentorId()));
 

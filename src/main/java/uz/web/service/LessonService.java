@@ -1,5 +1,6 @@
 package uz.web.service;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import uz.web.domain.DAO.LessonWithVideoDAO;
 import uz.web.domain.DTO.AddLessonUpdDTO;
 import uz.web.domain.DTO.LessonDTO;
 import uz.web.domain.entity.LessonEntity;
+import uz.web.domain.entity.ModuleEntity;
 import uz.web.repo.LessonRepo;
 
 import java.util.ArrayList;

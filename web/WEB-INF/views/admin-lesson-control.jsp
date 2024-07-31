@@ -57,15 +57,18 @@
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/main">
                             Admin Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-cash-stack"></i> Payments</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/payment"><i class="bi bi-cash-stack"></i> Payments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/mentor"><i class="bi bi-person-circle"></i> Mentors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/main"><i class="bi bi-tv"></i> Courses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-box-arrow-right"></i> Log Out</a>
@@ -189,8 +192,8 @@
                             <input type="number" class="form-control" id="lessonVideoDuration" name="videoDuration" placeholder="Video uzunligini kiriting (sekundlarda)" required>
                         </div>
                         <div class="mb-3">
-                            <label for="lessonDescription" class="form-label">Dars ma'lumotlari</label>
-                            <textarea class="form-control" id="lessonDescription" name="lessonDescription" rows="3" placeholder="Dars ma'lumotlarini kiriting" required></textarea>
+                            <label for="description" class="form-label">Dars ma'lumotlari</label>
+                            <textarea class="form-control" id="description" name="lessonDescription" rows="3" placeholder="Dars ma'lumotlarini kiriting" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="lessonVideoFile" class="form-label">Video fayl yuklash</label>

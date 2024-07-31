@@ -67,16 +67,20 @@
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/admin/main">
                             Admin Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="bi bi-cash-stack"></i> Payments</a>
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/payment"><i
+                                class="bi bi-cash-stack"></i> Payments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/mentor"><i
                                 class="bi bi-person-circle"></i> Mentors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/main"><i class="bi bi-tv"></i> Courses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/"><i
@@ -200,8 +204,10 @@
                 <c:choose>
                     <c:when test="${not empty otherPayments}">
                         <div class="row">
+                            <h3 class="mb-4">Boshqa to'lovlar</h3>
+
                             <c:forEach var="otherPayment" items="${otherPayments}">
-                                <h3 class="mb-4">Boshqa to'lovlar</h3>
+
                                 <div class="col-md-4 mb-3">
                                     <div class="card shadow-sm h-100">
                                         <div class="card-body p-2">

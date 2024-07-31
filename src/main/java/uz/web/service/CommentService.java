@@ -26,7 +26,7 @@ public class CommentService extends BaseService<CommentEntity>{
         this.save(new CommentEntity(
                 userService.findById(userId),
                 courseService.findById(commentDTO.getCourseId()),
-                commentDTO.getText()
+                commentDTO.getComment()
         ));
     }
 

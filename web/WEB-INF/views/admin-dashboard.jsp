@@ -68,10 +68,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-cash-stack"></i> Payments</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/payment"><i class="bi bi-cash-stack"></i> Payments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/mentor"><i class="bi bi-person-circle"></i> Mentors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/main"><i class="bi bi-tv"></i> Courses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-box-arrow-right"></i> Log Out</a>
@@ -90,7 +93,6 @@
                                 <h5 class="card-title">${course.name}</h5>
                                 <p class="card-text mb-1"><i class="bi bi-tag"></i> Narxi: $${course.price}</p>
                                 <p class="card-text mb-1"><i class="bi bi-person"></i> Mentor ismi: ${course.mentor}</p>
-                                <p class="card-text mb-1"><i class="bi bi-paperclip"></i> Kurs haqida: ${course.description}</p>
                             </div>
                             <div class="card-footer p-2">
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${course.id}">O'chirish</button>
@@ -129,7 +131,7 @@
                                 <form action="${pageContext.request.contextPath}/course/update" method="post" enctype="multipart/form-data">
                                     <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="courseName-${course.id}" class="form-label">Kurs ismi</label>
+                                                <label for="courseName-${course.id}" class="form-label">Kurs nomi</label>
                                                 <input type="text" class="form-control" name="name" id="courseName-${course.id}" value="${course.name}">
                                             </div>
                                             <div class="mb-3">
@@ -137,8 +139,8 @@
                                                 <input type="text" class="form-control" name="price" id="coursePrice-${course.id}" value="${course.price}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="coursePrice-${course.id}" class="form-label">Kurs Haqida</label>
-                                                <input type="text" class="form-control" name="description" id="courseDescription-${course.id}" value="${course.description}">
+                                                <label for="coursePrice-${course.id}" class="form-label">Kurs ma'lumotlari</label>
+                                                <input type="text" class="form-control" name="description" id="coursePrice-${course.id}" value="${course.description}">
                                             </div>
                                             <div class="mb-3">
                                                 <input type="file" class="form-control" name="img" required>

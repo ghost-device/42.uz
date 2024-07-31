@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.web.domain.DAO.PaymentHistoryDAO;
 import uz.web.domain.DAO.UserDao;
-import uz.web.domain.DTO.AcceptPaymentDTO;
 import uz.web.domain.DTO.PaymentDTO;
 import uz.web.domain.enumerators.PaymentStatus;
 import uz.web.service.PaymentService;
@@ -43,6 +42,7 @@ public class PaymentController {
             model.addAttribute("errorMessage", e.getMessage());
         }
         model.addAttribute("payments", paymentService.paymentHistoryOfUser(((UserDao) session.getAttribute("user")).getId()));
+        model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
 
         return "user-payment";
     }
@@ -50,16 +50,17 @@ public class PaymentController {
     @RequestMapping("/user/{userId}")
     public String userPayments(@PathVariable("userId") UUID userId, Model model) {
         List<PaymentHistoryDAO> paymentHistoryDAOS = paymentService.paymentHistoryOfUser(userId);
-
+        model.addAttribute("balance", userService.findById(userId).getBalance());
         model.addAttribute("payments", paymentHistoryDAOS);
         return "user-payment";
     }
 
 
-    @RequestMapping(value = "/approve/{paymentId}", method = RequestMethod.POST)
-    public String acceptPayment(AcceptPaymentDTO acceptPaymentDTO, Model model) {
+    @RequestMapping(value = "/approve/{paymentId}")
+    public String acceptPayment(@PathVariable("paymentId") UUID paymentId,
+                                Model model) {
         try {
-            paymentService.acceptPayment(acceptPaymentDTO);
+            paymentService.acceptPayment(paymentService.findById(paymentId));
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
