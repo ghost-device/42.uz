@@ -47,7 +47,7 @@ public class CommentController {
     @RequestMapping("/all/{courseId}")
     public String allComments(@PathVariable("courseId") UUID courseId, Model model){
         model.addAttribute("comments", courseService.findById(courseId).getCommentEntities());
-        return "admin-comments-control";
+        return "admin-comment-control";
     }
 
     @RequestMapping("/delete/{commentId}")

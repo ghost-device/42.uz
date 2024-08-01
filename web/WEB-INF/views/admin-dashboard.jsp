@@ -97,7 +97,8 @@
                             <div class="card-footer p-2">
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-${course.id}">O'chirish</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal-${course.id}">O'zgartirish</button>
-                                <a href="${pageContext.request.contextPath}/course/modules/${course.id}" class="btn btn-secondary btn-sm">Kurs modullarini</a>
+                                <a href="${pageContext.request.contextPath}/comment/all/${course.id}" class="btn btn-secondary btn-sm">Kommentlar</a>
+                                <a href="${pageContext.request.contextPath}/course/modules/${course.id}" class="btn btn-secondary btn-sm">Modullar</a>
                             </div>
                         </div>
                     </div>
