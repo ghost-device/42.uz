@@ -5,13 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.web.domain.DAO.UserDao;
 import uz.web.domain.DTO.CommentDTO;
+import uz.web.domain.entity.CommentEntity;
+import uz.web.domain.entity.CourseEntity;
 import uz.web.service.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/comment")
@@ -38,5 +42,22 @@ public class CommentController {
         model.addAttribute("course", courseService.getCourseDAOS(List.of(courseService.findById(commentDTO.getCourseId()))).get(0));
         model.addAttribute("balance", userService.findById(((UserDao) session.getAttribute("user")).getId()).getBalance());
         return "user-modules";
+    }
+
+    @RequestMapping("/all/{courseId}")
+    public String allComments(@PathVariable("courseId") UUID courseId, Model model){
+        model.addAttribute("comments", courseService.findById(courseId).getCommentEntities());
+        return "admin-comments-control";
+    }
+
+    @RequestMapping("/delete/{commentId}")
+    public String deleteComment(@PathVariable("commentId") UUID commentId, Model model){
+        try {
+            commentService.delete(commentId);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        model.addAttribute("comments", courseService.findById(commentId).getCommentEntities());
+        return "admin-comments-control";
     }
 }
